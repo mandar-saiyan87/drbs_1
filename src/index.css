@@ -21,4 +21,28 @@ code {
 body {
   background-color: cadetblue;
   font-family: 'Poppins';
+  overflow-x: hidden;
+}
+
+.submitbtn {
+  width: 150px;
+  background-color: rgb(24, 107, 134);
+  color: white;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  text-align: center;
+  border-radius: 5px;
+  border-style: none;
+  padding: 10px;
+  margin: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.submitbtn:hover {
+  background-color: #484849;
 }
