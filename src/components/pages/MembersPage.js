@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from "react-router-dom";
@@ -7,16 +7,28 @@ function MembersPage() {
 
   const context = useContext(AppContext);
 
-  const { members, getMembers, deleteMember } = context;
+  const { members, getMembers, deleteMember, searchMember } = context;
   const navigate = useNavigate();
 
+  const [search, setSearch] = useState("")
+
   useEffect(() => {
-    getMembers();
+    if (search.length === 0) { 
+      getMembers();
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [deleteMember, search]);
 
   function updateMemberDetails(memberData) {
-    navigate('/editMembers', {state: memberData})
+    navigate('/editMembers', { state: memberData })
+  }
+
+  function handlesearchChange(e) {
+    setSearch(e.target.value)
+  }
+
+  function handleSearch() {
+    searchMember(search)
   }
 
   return (
@@ -24,6 +36,10 @@ function MembersPage() {
       <div className='px-9'>
         <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer w-[9%]'>
           <Link to="/membersform">Add Member</Link>
+        </div>
+        <div className='flex flex-row'>
+          <input type="text" name="checkno" value={search} className='w-[20%]' onChange={handlesearchChange} placeholder='Search' />
+          <div className='bg-blue-500 px-4 text-white hover:bg-gray-400 cursor-pointer' onClick={handleSearch}>SEARCH</div>
         </div>
         <div className='grid grid-cols-5 mt-10 w-[85%]'>
           <div>संपूर्ण नांव</div>

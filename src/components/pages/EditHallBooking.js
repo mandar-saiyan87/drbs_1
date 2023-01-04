@@ -1,73 +1,24 @@
 import React, { useState, useContext } from 'react';
 import { AppContext } from '../context/AppContext';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-function HallBookingForm() {
+function EditHallBooking() {
 
+  const location = useLocation();
   const context = useContext(AppContext);
-
-
-  const { addBooking } = context;
+  const { editBooking } = context;
   const navigate = useNavigate();
 
-  const [booking, setBooking] = useState({
-    event: "",
-    description: "",
-    fullname: "",
-    address: "",
-    memberno: "",
-    membership: "",
-    orgaddress: "",
-    bookingtype: "",
-    eventdate: "",
-    guestno: "",
-    hallno: "",
-    rent: 0,
-    deposit: 0,
-    total: 0,
-    totalwords: "",
-    checkno: "",
-    checkdate: "",
-    bankname: "",
-    totalamount: "",
-    receiptno: "",
-    receiptdate: "",
-    membercode: "",
-  })
+  const [eBooking, setEbooking] = useState(location.state);
 
-  function handleChange(e) {
-    setBooking({ ...booking, [e.target.name]: e.target.value })
+  function handleUpdate(e) {
+    setEbooking({ ...eBooking, [e.target.name]: e.target.value })
   }
 
-  function handleSubmit() {
-    addBooking(booking);
-    setBooking({
-      event: "",
-      description: "",
-      fullname: "",
-      address: "",
-      memberno: "",
-      membership: "",
-      orgaddress: "",
-      bookingtype: "",
-      eventdate: "",
-      guestno: "",
-      hallno: "",
-      rent: 0,
-      deposit: 0,
-      total: 0,
-      totalwords: "",
-      checkno: "",
-      checkdate: "",
-      bankname: "",
-      totalamount: "",
-      receiptno: "",
-      receiptdate: "",
-      membercode: "",
-    })
+  function handleEdits(booking, id) {
+    editBooking(booking, id);
     navigate('/hallbookings');
   }
-
 
   return (
     <>
@@ -75,7 +26,7 @@ function HallBookingForm() {
         <div className='my-9'>
           <p className='text-[1.2rem] my-3'>कार्याचा प्रकार</p>
           <div >
-            <select required value={booking.event} onChange={handleChange} name="event">
+            <select value={eBooking.event} onChange={handleUpdate} name="event">
               <option selected>Select</option>
               <option value="लग्न">लग्न</option>
               <option value="मुंज">मुंज</option>
@@ -90,28 +41,28 @@ function HallBookingForm() {
         </div>
         <div className='flex flex-col my-2'>
           <label className="mr-3" for="bank">कार्याची थोडक्यात माहिती</label>
-          <textarea required name="description" value={booking.description} className='w-[40%]' rows="4" col="50" onChange={handleChange} />
+          <textarea name="description" value={eBooking.description} className='w-[40%]' rows="4" col="50" onChange={handleUpdate} />
         </div>
         <div className='flex flex-row my-5'>
           <div className='flex flex-col mr-20'>
             <label className="mr-3" for="fullname">अर्जदाराचे नाव</label>
-            <input required type="text" name="fullname" value={booking.fullname} className='w-[100%]' maxLength="100" onChange={handleChange} />
+            <input type="text" name="fullname" value={eBooking.fullname} className='w-[100%]' maxLength="100" onChange={handleUpdate} />
           </div>
           <div className='flex flex-col'>
             <label className="mr-3" for="address">पत्ता</label>
-            <textarea required type="text" name="address" value={booking.address} className="w-[100%]" maxLength="500" onChange={handleChange} />
+            <textarea type="text" name="address" value={eBooking.address} className="w-[100%]" maxLength="500" onChange={handleUpdate} />
           </div>
         </div>
 
         <div className='flex flex-row my-5'>
           <div className='flex flex-col mr-20'>
             <label className="mr-3" for="memberno">संस्थेचा सभासद क्रमांक</label>
-            <input required type="text" name="memberno" value={booking.memberno} className='w-[90%]' maxLength="10" onChange={handleChange} />
+            <input type="text" name="memberno" value={eBooking.memberno} className='w-[90%]' maxLength="10" onChange={handleUpdate} />
           </div>
           <div>
             <p className='mr-3'>सभासद वर्ग</p>
             <div>
-              <select required value={booking.membership} onChange={handleChange} name="membership">
+              <select value={eBooking.membership} onChange={handleUpdate} name="membership">
                 <option selected>Select</option>
                 <option value="आश्रयदाते">आश्रयदाते</option>
                 <option value="हितचिंतक">हितचिंतक</option>
@@ -123,7 +74,7 @@ function HallBookingForm() {
         </div>
         <div className='flex flex-col my-5'>
           <label className="mr-3" for="address">संस्थेचे नाव व पत्ता</label>
-          <textarea required type="text" name="orgaddress" value={booking.orgaddress} className="w-[19%]" maxLength="500" onChange={handleChange} />
+          <textarea type="text" name="orgaddress" value={eBooking.orgaddress} className="w-[19%]" maxLength="500" onChange={handleUpdate} />
         </div>
         <div className='my-14 border border-black w-[75%]'>
           <div className="grid grid-cols-5 text-center">
@@ -168,7 +119,7 @@ function HallBookingForm() {
         <div className='flex flex-row my-10 justify-between w-[90%]'>
           <div className='flex flex-col w-[10%]'>
             <label className='text-[1.2rem]'>बुकिंगचा प्रकार</label>
-            <select required value={booking.bookingtype} onChange={handleChange} name="bookingtype">
+            <select value={eBooking.bookingtype} onChange={handleUpdate} name="bookingtype">
               <option selected>Select</option>
               <option value="अ">अ</option>
               <option value="ब">ब</option>
@@ -178,15 +129,15 @@ function HallBookingForm() {
           </div>
           <div className='flex flex-col w-[20%]'>
             <label className="text-[1.2rem]" for="dob">कार्यक्रम / समारंभाचा दिवस</label>
-            <input required type="date" name="eventdate" value={booking.eventdate} className="w-[95%]" onChange={handleChange} />
+            <input type="date" name="eventdate" value={eBooking.eventdate} className="w-[95%]" onChange={handleUpdate} />
           </div>
           <div className='flex flex-col'>
             <label className="text-[1.2rem]" >निमंत्रितांची अंदाजे संख्या</label>
-            <input required type="text" name="guestno" value={booking.guestno} maxLength="10" className="w-[30%]" onChange={handleChange} />
+            <input type="text" name="guestno" value={eBooking.guestno} maxLength="10" className="w-[30%]" onChange={handleUpdate} />
           </div>
           <div className='flex flex-col w-[10%]'>
             <label className='text-[1.2rem]'>सभागृह</label>
-            <select required value={booking.hallno} onChange={handleChange} name="hallno">
+            <select value={eBooking.hallno} onChange={handleUpdate} name="hallno">
               <option selected>Select</option>
               <option value="सभागृह १">सभागृह १</option>
               <option value="सभागृह २">सभागृह २</option>
@@ -198,19 +149,19 @@ function HallBookingForm() {
         <div className='flex flex-row my-10 justify-between w-[80%]'>
           <div className='flex flex-col w-[10%]'>
             <label className='text-[1.2rem]'>भाडे रुपये</label>
-            <input required type="text" name="rent" value={booking.rent} onChange={handleChange} />
+            <input type="text" name="rent" value={eBooking.rent} onChange={handleUpdate} />
           </div>
           <div className='flex flex-col w-[10%]'>
             <label className="text-[1.2rem]">अनामत रुपये</label>
-            <input required type="text" name="deposit" value={booking.deposit} onChange={handleChange} />
+            <input type="text" name="deposit" value={eBooking.deposit} onChange={handleUpdate} />
           </div>
           <div className='flex flex-col w-[10%]'>
             <label className="text-[1.2rem]">एकूण</label>
-            <input required type="text" name="total" value={booking.total} onChange={handleChange} />
+            <input type="text" name="total" value={eBooking.total} onChange={handleUpdate} />
           </div>
           <div className='flex flex-col w-[25%]'>
             <label className='text-[1.2rem]'>संपूर्ण रक्कम (अक्षरी)</label>
-            <input type="text" name="totalwords" value={booking.totalwords} onChange={handleChange} />
+            <input type="text" name="totalwords" value={eBooking.totalwords} onChange={handleUpdate} />
           </div>
         </div>
         <div className="my-10">
@@ -218,37 +169,37 @@ function HallBookingForm() {
           <div className='grid grid-cols-4'>
             <div className='flex flex-col my-2'>
               <label className="mr-3" for="checkno">धनादेश क्र.</label>
-              <input type="text" name="checkno" value={booking.checkno} className='w-[60%]' maxLength="10" onChange={handleChange} />
+              <input type="text" name="checkno" value={eBooking.checkno} className='w-[60%]' maxLength="10" onChange={handleUpdate} />
             </div>
             <div className='flex flex-col my-2'>
               <label className="mr-3">दिनांक</label>
-              <input type="date" name="checkdate" value={booking.checkdate} className='w-[65%]' onChange={handleChange} />
+              <input type="date" name="checkdate" value={eBooking.checkdate} className='w-[65%]' onChange={handleUpdate} />
             </div>
             <div className='flex flex-col my-2'>
               <label className="mr-3" for="bank">बँक</label>
-              <input type="text" name="bankname" value={booking.bankname} className='w-[60%]' onChange={handleChange} />
+              <input type="text" name="bankname" value={eBooking.bankname} className='w-[60%]' onChange={handleUpdate} />
             </div>
             <div className='flex flex-col my-2'>
               <label className="mr-3" for="bank">रक्कम रुपये</label>
-              <input type="text" name="totalamount" value={booking.totalamount} className='w-[60%]' onChange={handleChange} />
+              <input type="text" name="totalamount" value={eBooking.totalamount} className='w-[60%]' onChange={handleUpdate} />
             </div>
           </div>
         </div>
         <div className='flex flex-row my-10 justify-between w-[80%]'>
           <div className='flex flex-col w-[10%]'>
             <label className='text-[1.2rem]'>पावती क्रमांक</label>
-            <input type="text" name="receiptno" value={booking.receiptno} onChange={handleChange} />
+            <input type="text" name="receiptno" value={eBooking.receiptno} onChange={handleUpdate} />
           </div>
           <div className='flex flex-col w-[20%]'>
             <label className="text-[1.2rem]">दिनांक</label>
-            <input type="date" name="receiptdate" value={booking.receiptdate} className='w-[65%]' onChange={handleChange} />
+            <input type="date" name="receiptdate" value={eBooking.receiptdate} className='w-[65%]' onChange={handleUpdate} />
           </div>
           <div className='flex flex-col w-[25%]'>
             <label className="text-[1.2rem]">नोंदणीदाराचा कोड नंबर</label>
-            <input type="text" name="membercode" value={booking.membercode} onChange={handleChange} />
+            <input type="text" name="membercode" value={eBooking.membercode} onChange={handleUpdate} />
           </div>
         </div>
-        <button type="submit" className="submitbtn" onClick={handleSubmit}>Submit</button>
+        <button type="submit" className="submitbtn" onClick={() => handleEdits(eBooking, eBooking.id)}>Update</button>
         <div className="my-10">
           <p className='text-[1.2rem] my-3'>संस्थेच्या बँक खात्याचा तपशील</p>
           <div>
@@ -263,10 +214,4 @@ function HallBookingForm() {
   )
 }
 
-export default HallBookingForm
-
-
-
-
-
-
+export default EditHallBooking

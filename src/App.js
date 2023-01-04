@@ -8,6 +8,7 @@ import MembersPage from './components/pages/MembersPage';
 import EditMembers from './components/pages/EditMembers';
 import HallBooking from './components/pages/HallBooking';
 import HallBookingForm from './components/pages/HallBookingForm';
+import EditHallBooking from './components/pages/EditHallBooking';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path='/editMembers' element={<EditMembers />} />
           <Route path='/hallbookings' element={<HallBooking />} />
           <Route path='/hallbookingform' element={<HallBookingForm />} />
+          <Route path='/editHallBooking' element={<EditHallBooking />} />
         </Routes>
       </DbsState>
 

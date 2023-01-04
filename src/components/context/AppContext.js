@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { collection, addDoc, getDocs, doc, deleteDoc, query, updateDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, deleteDoc, query, updateDoc, where } from "firebase/firestore";
 import { db, auth } from "./Firebase/firebaseConfig";
 
 const AppContext = createContext();
@@ -15,9 +15,27 @@ function DbsState(props) {
 
   const hallBookingsInit = [];
 
+  
   const [members, setMembers] = useState(membersInit);
 
   const [bookings, setBookings] = useState(hallBookingsInit);
+
+
+  // Search Member
+
+  async function searchMember(searchquery) {
+    try {
+      const q = query(membersCollection, where("mobile", "==", searchquery))
+      const allmembers = await getDocs(q)
+      // console.log(allTodos.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+      const memberList = allmembers.docs.map(doc => ({ ...doc.data(), id: doc.id }))
+      setMembers(memberList)
+    } catch (e) {
+      console.error("Error getting documents: ", e);
+    }
+  }
+
+
   // Get Member Details
   async function getMembers() {
     try {
@@ -36,7 +54,7 @@ function DbsState(props) {
       const qb = query(bookingCollection)
       const allBookings = await getDocs(qb)
       const bookingList = allBookings.docs.map(doc => ({ ...doc.data(), id: doc.id }))
-      setMembers(bookings)
+      setBookings(bookingList)
     } catch (e) {
       console.error("Error getting documents: ", e);
     }
@@ -73,6 +91,21 @@ function DbsState(props) {
         return member.id !== id;
       })
       setMembers(newMembers)
+    } catch (e) {
+      console.error("Error deleting documents: ", e);
+    }
+
+  }
+
+  // Delete Boooking
+  async function deleteBooking(id) {
+
+    try {
+      await deleteDoc(doc(db, "hallbookings", id));
+      const newBookings = bookings.filter(booking => {
+        return booking.id !== id;
+      })
+      setMembers(newBookings)
     } catch (e) {
       console.error("Error deleting documents: ", e);
     }
@@ -117,9 +150,65 @@ function DbsState(props) {
     }
   }
 
+  // Update Booking
+  async function editBooking(newbookingDetails, id) {
+
+    try {
+      const editedDoc = doc(bookingCollection, id);
+
+      await updateDoc(editedDoc, newbookingDetails);
+
+      const editedBooking = bookings.map(elem => {
+        if (elem.id === id) {
+          return {
+            ...elem,
+            event: elem.event,
+            description: elem.description,
+            fullname: elem.fullname,
+            address: elem.address,
+            memberno: elem.memberno,
+            membership: elem.membership,
+            orgaddress: elem.orgaddress,
+            bookingtype: elem.bookingtype,
+            eventdate: elem.eventdate,
+            guestno: elem.guestno,
+            hallno: elem.hallno,
+            rent: elem.rent,
+            deposit: elem.deposit,
+            total: elem.total,
+            totalwords: elem.totalwords,
+            checkno: elem.checkno,
+            checkdate: elem.checkdate,
+            bankname: elem.bankname,
+            totalamount: elem.totalamount,
+            receiptno: elem.receiptno,
+            receiptdate: elem.receiptdate,
+            membercode: elem.membercode,
+          }
+        }
+        return elem;
+      })
+      setMembers(editedBooking)
+    } catch (e) {
+      console.error("Error updating documents: ", e);
+    }
+  }
+
   return (
     <>
-      <AppContext.Provider value={{ addMember, members, getMembers, deleteMember, editMember, bookings, addBooking, getBookings }}>
+      <AppContext.Provider value={{
+        addMember,
+        members,
+        getMembers,
+        deleteMember,
+        editMember,
+        bookings,
+        addBooking,
+        getBookings,
+        deleteBooking,
+        editBooking,
+        searchMember
+      }}>
         {props.children}
       </AppContext.Provider>
     </>

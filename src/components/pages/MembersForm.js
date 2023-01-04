@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 export default function MembersForm() {
 
   const context = useContext(AppContext);
- 
 
-  const { addMember} = context;
+
+  const { addMember } = context;
   const navigate = useNavigate();
 
   const [memberDetails, setMemberDetails] = useState({
@@ -62,7 +62,7 @@ export default function MembersForm() {
         <div className='my-9'>
           <p className='text-[1.2rem] my-3'>सभासद वर्ग व त्यांची वर्गणी</p>
           <div >
-            <select value={memberDetails.membership} onChange={handleChange} name="membership">
+            <select value={memberDetails.membership} onChange={handleChange} name="membership" required>
               <option selected>Select</option>
               <option value="आश्रयदाते ३००१">आश्रयदाते ३००१</option>
               <option value="हितचिंतक १५०१">हितचिंतक १५०१</option>
@@ -73,7 +73,7 @@ export default function MembersForm() {
 
         <div className="my-9">
           <p className='text-[1.2rem] my-3'>वर्गणी जमा पद्धत</p>
-          <select value={memberDetails.paymentmode} onChange={handleChange} name="paymentmode">
+          <select value={memberDetails.paymentmode} onChange={handleChange} name="paymentmode" required>
             <option selected>Select</option>
             <option value="रोख">रोख</option>
             <option value="धनादेश">धनादेश</option>
@@ -85,15 +85,15 @@ export default function MembersForm() {
             <div className='grid grid-cols-3 gap-4'>
               <div className='flex flex-col my-2'>
                 <label className="mr-3" for="checkno">धनादेश क्र.</label>
-                <input type="text" name="checkno" value={memberDetails.checkno} className='w-[60%]' maxLength="10" onChange={handleChange} />
+                <input required type="text" name="checkno" value={memberDetails.checkno} className='w-[60%]' maxLength="10" onChange={handleChange} />
               </div>
               <div className='flex flex-col my-2'>
                 <label className="mr-3" for="paymentmode1">दिनांक</label>
-                <input type="date" name="date" value={memberDetails.checkdate} className='w-[65%]' onChange={handleChange} />
+                <input required type="date" name="date" value={memberDetails.checkdate} className='w-[65%]' onChange={handleChange} />
               </div>
               <div className='flex flex-col my-2'>
                 <label className="mr-3" for="bank">बँक</label>
-                <input type="text" name="bankname" value={memberDetails.bankname} className='w-[60%]' onChange={handleChange} />
+                <input required type="text" name="bankname" value={memberDetails.bankname} className='w-[60%]' onChange={handleChange} />
               </div>
             </div>
           </div>
@@ -102,16 +102,16 @@ export default function MembersForm() {
           <p className='text-[1.2rem] my-3'>सभासदाची आवश्यक माहिती</p>
           <div className='flex flex-col my-2'>
             <label className="mr-3" for="fullname">संपूर्ण नांव</label>
-            <input type="text" name="fullname" value={memberDetails.fullname} className='w-[20%]' maxLength="100" onChange={handleChange} />
+            <input required type="text" name="fullname" value={memberDetails.fullname} className='w-[20%]' maxLength="100" onChange={handleChange} />
           </div>
           <div className='flex flex-col my-2'>
             <label className="mr-3" for="address">पत्ता</label>
-            <textarea type="text" name="address" value={memberDetails.address} className="w-[20%]" maxLength="500" onChange={handleChange} />
+            <textarea required type="text" name="address" value={memberDetails.address} className="w-[20%]" maxLength="500" onChange={handleChange} />
           </div>
           <div className='grid grid-cols-3 gap-4'>
             <div className='flex flex-col my-2'>
               <label className="mr-3" for="dob">जन्म दिनांक</label>
-              <input type="date" name="dob" value={memberDetails.dob} className="w-[60%]" onChange={handleChange} />
+              <input required type="date" name="dob" value={memberDetails.dob} className="w-[60%]" onChange={handleChange} />
             </div>
             <div className='flex flex-col my-2'>
               <label className="mr-3" for="landline">दूरध्वनी</label>
@@ -119,7 +119,7 @@ export default function MembersForm() {
             </div>
             <div className='flex flex-col my-2'>
               <label className="mr-3" for="mobile">भ्रमणध्वनी</label>
-              <input type="text" name="mobile" value={memberDetails.mobile} maxLength="15" className="w-[70%]" onChange={handleChange} />
+              <input required type="text" name="mobile" value={memberDetails.mobile} maxLength="15" className="w-[70%]" onChange={handleChange} />
             </div>
             <div className='flex flex-col my-2'>
               <label className="mr-3" for="bloodgroup">रक्तगट</label>
@@ -127,15 +127,15 @@ export default function MembersForm() {
             </div>
             <div className='flex flex-col my-2'>
               <label className="mr-3" for="education">शिक्षण</label>
-              <input type="text" name="education" value={memberDetails.education} maxLength="100" className="w-[70%]" onChange={handleChange} />
+              <input required type="text" name="education" value={memberDetails.education} maxLength="100" className="w-[70%]" onChange={handleChange} />
             </div>
             <div className='flex flex-col my-2'>
               <label className="mr-3" for="gotra">गोत्र</label>
-              <input type="text" name="gotra" value={memberDetails.gotra} maxLength="100" className="w-[70%]" onChange={handleChange} />
+              <input required type="text" name="gotra" value={memberDetails.gotra} maxLength="100" className="w-[70%]" onChange={handleChange} />
             </div>
             <div className='flex flex-col my-2'>
               <label className="mr-3" for="occupation">नौकरी/व्यवसाय</label>
-              <input type="text" name="occupation" value={memberDetails.occupation} maxLength="200" className="w-[70%]" onChange={handleChange} />
+              <input required type="text" name="occupation" value={memberDetails.occupation} maxLength="200" className="w-[70%]" onChange={handleChange} />
             </div>
             <div className='flex flex-col my-2'>
               <label className="mr-3" for="reference">शिफारस</label>
@@ -143,7 +143,7 @@ export default function MembersForm() {
             </div>
             <div className='flex flex-col my-2'>
               <label for="cars">जीवन परीस्थिती</label>
-              <select value={memberDetails.livingStatus} onChange={handleChange} name="livingStatus">
+              <select required value={memberDetails.livingStatus} onChange={handleChange} name="livingStatus">
                 <option selected>Select</option>
                 <option value="हयात">हयात</option>
                 <option value="मृत">मृत</option>
