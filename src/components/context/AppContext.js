@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { collection, addDoc, getDocs, doc, deleteDoc, query, updateDoc, where } from "firebase/firestore";
-import { db, auth } from "./Firebase/firebaseConfig";
+import { db } from "./Firebase/firebaseConfig";
 
 const AppContext = createContext();
 
@@ -15,7 +15,7 @@ function DbsState(props) {
 
   const hallBookingsInit = [];
 
-  
+
   const [members, setMembers] = useState(membersInit);
 
   const [bookings, setBookings] = useState(hallBookingsInit);
