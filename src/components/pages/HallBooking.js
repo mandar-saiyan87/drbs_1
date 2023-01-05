@@ -12,7 +12,7 @@ export default function HallBooking() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getBookings();
+    // getBookings();
     // eslint-disable-next-line
   }, [deleteBooking]);
 
