@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from "react-router-dom";
+import exportFromJSON from 'export-from-json';
 
 function MembersPage() {
 
@@ -12,8 +13,16 @@ function MembersPage() {
 
   const [search, setSearch] = useState("")
 
+  const data = members;
+  const filename = 'download';
+  const exportType = exportFromJSON.types.csv;
+
+  function ExporttoExcel() {
+    exportFromJSON({ data, filename, exportType })
+  }
+
   useEffect(() => {
-    if (search.length === 0) { 
+    if (search.length === 0) {
       getMembers();
     }
     // eslint-disable-next-line
@@ -23,9 +32,6 @@ function MembersPage() {
     navigate('/editMembers', { state: memberData })
   }
 
-  function handlesearchChange(e) {
-    setSearch(e.target.value)
-  }
 
   function handleSearch() {
     searchMember(search)
@@ -37,8 +43,9 @@ function MembersPage() {
         <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer w-[9%]'>
           <Link to="/membersform">Add Member</Link>
         </div>
+        <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer w-[5%]' onClick={ExporttoExcel}>Export</div>
         <div className='flex flex-row'>
-          <input type="text" name="checkno" value={search} className='w-[20%]' onChange={handlesearchChange} placeholder='Search' />
+          <input type="text" value={search} className='w-[20%]' onChange={(e) => setSearch(e.target.value)} placeholder='Search' />
           <div className='bg-blue-500 px-4 text-white hover:bg-gray-400 cursor-pointer' onClick={handleSearch}>SEARCH</div>
         </div>
         <div className='grid grid-cols-5 mt-10 w-[85%]'>
@@ -46,7 +53,7 @@ function MembersPage() {
           <div>दूरध्वनी</div>
           <div>भ्रमणध्वनी</div>
           <div>सभासद वर्ग</div>
-          <div>जीवन परीस्थिती</div>
+          <div>लाईफ स्टेटस</div>
         </div>
         <hr />
         <div>

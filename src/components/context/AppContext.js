@@ -35,6 +35,18 @@ function DbsState(props) {
     }
   }
 
+  async function searchBooking(searchquery) {
+    try {
+      const q = query(bookingCollection, where("hallno", "==", searchquery))
+      const allBookings = await getDocs(q)
+      // console.log(allTodos.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+      const bookingList = allBookings.docs.map(doc => ({ ...doc.data(), id: doc.id }))
+      setBookings(bookingList)
+    } catch (e) {
+      console.error("Error getting documents: ", e);
+    }
+  }
+
 
   // Get Member Details
   async function getMembers() {
@@ -177,6 +189,7 @@ function DbsState(props) {
             deposit: elem.deposit,
             total: elem.total,
             totalwords: elem.totalwords,
+            paymentmode: elem.paymentmode,
             checkno: elem.checkno,
             checkdate: elem.checkdate,
             bankname: elem.bankname,
@@ -207,7 +220,8 @@ function DbsState(props) {
         getBookings,
         deleteBooking,
         editBooking,
-        searchMember
+        searchMember,
+        searchBooking
       }}>
         {props.children}
       </AppContext.Provider>
