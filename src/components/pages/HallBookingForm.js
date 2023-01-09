@@ -230,15 +230,15 @@ function HallBookingForm() {
               <div className='grid grid-cols-4'>
                 <div className='flex flex-col my-2'>
                   <label className="mr-3" for="checkno">धनादेश क्र.</label>
-                  <input required type="text" name="checkno" value={booking.checkno} className='w-[60%]' maxLength="10" onChange={handleChange} />
+                  <input type="text" name="checkno" value={booking.checkno} className='w-[60%]' maxLength="10" onChange={handleChange} />
                 </div>
                 <div className='flex flex-col my-2'>
                   <label className="mr-3">दिनांक</label>
-                  <input required type="date" name="checkdate" value={booking.checkdate} className='w-[65%]' onChange={handleChange} />
+                  <input type="date" name="checkdate" value={booking.checkdate} className='w-[65%]' onChange={handleChange} />
                 </div>
                 <div className='flex flex-col my-2'>
                   <label className="mr-3" for="bank">बँक</label>
-                  <input required type="text" name="bankname" value={booking.bankname} className='w-[60%]' onChange={handleChange} />
+                  <input type="text" name="bankname" value={booking.bankname} className='w-[60%]' onChange={handleChange} />
                 </div>
                 <div className='flex flex-col my-2'>
                   <label className="mr-3" for="bank">रक्कम रुपये</label>
