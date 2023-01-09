@@ -6,7 +6,7 @@ export default function Navbar() {
     <>
       <div className='bg-blue-400 p-3 w-screen flex flex-row shadow-md'>
         <div className='m-5 text-white text-xl cursor-pointer'>
-          <Link to="/">Member Regitrations</Link>
+          <Link to="/">Member Registrations</Link>
         </div>
         <div className='m-5 text-white text-xl cursor-pointer'>
           <Link to="/hallbookings">Hall Booking</Link>

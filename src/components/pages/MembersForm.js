@@ -10,7 +10,7 @@ export default function MembersForm() {
   const navigate = useNavigate();
 
   const [memberDetails, setMemberDetails] = useState({
-    membership: "आश्रयदाते ३००१",
+    membership: "आश्रयदाते",
     paymentmode: "रोख",
     checkno: "",
     checkdate: "",
@@ -36,7 +36,7 @@ export default function MembersForm() {
     // console.log(memberDetails)
     addMember(memberDetails);
     setMemberDetails({
-      membership: "आश्रयदाते ३००१",
+      membership: "आश्रयदाते",
       paymentmode: "रोख",
       checkno: "",
       checkdate: "",
@@ -65,9 +65,9 @@ export default function MembersForm() {
             <div >
               <select required value={memberDetails.membership} onChange={handleChange} name="membership">
                 <option disabled>Select</option>
-                <option value="आश्रयदाते ३००१" selected>आश्रयदाते ३००१</option>
-                <option value="हितचिंतक १५०१">हितचिंतक १५०१</option>
-                <option value="आजीव ३०१">आजीव ३०१</option>
+                <option value="आश्रयदाते" selected>आश्रयदाते</option>
+                <option value="हितचिंतक">हितचिंतक</option>
+                <option value="आजीव">आजीव</option>
               </select>
             </div>
           </div>
@@ -86,15 +86,15 @@ export default function MembersForm() {
               <div className='grid grid-cols-3 gap-4'>
                 <div className='flex flex-col my-2'>
                   <label className="mr-3" for="checkno">धनादेश क्र.</label>
-                  <input required type="text" name="checkno" value={memberDetails.checkno} className='w-[60%]' maxLength="10" onChange={handleChange} />
+                  <input type="text" name="checkno" value={memberDetails.checkno} className='w-[60%]' maxLength="10" onChange={handleChange} />
                 </div>
                 <div className='flex flex-col my-2'>
                   <label className="mr-3" >दिनांक</label>
-                  <input required type="date" name="checkdate" value={memberDetails.checkdate} className='w-[65%]' onChange={handleChange} />
+                  <input type="date" name="checkdate" value={memberDetails.checkdate} className='w-[65%]' onChange={handleChange} />
                 </div>
                 <div className='flex flex-col my-2'>
                   <label className="mr-3" for="bank">बँक</label>
-                  <input required type="text" name="bankname" value={memberDetails.bankname} className='w-[60%]' onChange={handleChange} />
+                  <input type="text" name="bankname" value={memberDetails.bankname} className='w-[60%]' onChange={handleChange} />
                 </div>
               </div>
             </div>
