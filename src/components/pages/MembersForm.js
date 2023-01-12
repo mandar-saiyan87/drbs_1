@@ -16,6 +16,7 @@ export default function MembersForm() {
     checkdate: "",
     bankname: "",
     fullname: "",
+    memberno: "",
     address: "",
     dob: "",
     landline: "",
@@ -42,6 +43,7 @@ export default function MembersForm() {
       checkdate: "",
       bankname: "",
       fullname: "",
+      memberno: "",
       address: "",
       dob: "",
       landline: "",
@@ -104,6 +106,10 @@ export default function MembersForm() {
             <div className='flex flex-col my-2'>
               <label className="mr-3" for="fullname">संपूर्ण नांव</label>
               <input required type="text" name="fullname" value={memberDetails.fullname} className='w-[20%]' maxLength="100" onChange={handleChange} />
+            </div>
+            <div className='flex flex-col my-2'>
+              <label className="mr-3" for="fullname">सभासद क्र.</label>
+              <input type="text" name="memberno" value={memberDetails.memberno} className='w-[10%]' maxLength="100" onChange={handleChange} />
             </div>
             <div className='flex flex-col my-2'>
               <label className="mr-3" for="address">पत्ता</label>

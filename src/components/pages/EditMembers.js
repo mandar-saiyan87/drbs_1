@@ -70,6 +70,10 @@ export default function EditMembers() {
               <input required type="text" name="fullname" value={eMember.fullname} className='w-[20%]' maxLength="100" onChange={handleUpdate} />
             </div>
             <div className='flex flex-col my-2'>
+              <label className="mr-3" for="fullname">सभासद क्र.</label>
+              <input type="text" name="memberno" value={eMember.memberno} className='w-[10%]' maxLength="100" onChange={handleUpdate} />
+            </div>
+            <div className='flex flex-col my-2'>
               <label className="mr-3" for="address">पत्ता</label>
               <textarea required type="text" name="address" value={eMember.address} className="w-[20%]" maxLength="500" onChange={handleUpdate} />
             </div>

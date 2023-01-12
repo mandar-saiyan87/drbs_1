@@ -142,6 +142,7 @@ function DbsState(props) {
             checkdate: elem.checkdate,
             bankname: elem.bankname,
             fullname: elem.fullname,
+            memberno: elem.memberno,
             address: elem.address,
             dob: elem.dob,
             landline: elem.landline,
