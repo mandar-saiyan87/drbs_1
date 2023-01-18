@@ -49,8 +49,8 @@ function MembersPage() {
           <div className='bg-blue-500 px-4 text-white hover:bg-gray-400 cursor-pointer' onClick={handleSearch}>SEARCH</div>
         </div>
         <div className='grid grid-cols-5 mt-10 w-[85%]'>
+          <div>सभासद क्र.</div>
           <div>संपूर्ण नांव</div>
-          <div>दूरध्वनी</div>
           <div>भ्रमणध्वनी</div>
           <div>सभासद वर्ग</div>
           <div>लाईफ स्टेटस</div>

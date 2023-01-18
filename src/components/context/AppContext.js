@@ -25,7 +25,7 @@ function DbsState(props) {
 
   async function searchMember(searchquery) {
     try {
-      const q = query(membersCollection, where("mobile", "==", searchquery))
+      const q = query(membersCollection, where("memberno", "==", searchquery))
       const allmembers = await getDocs(q)
       // console.log(allTodos.docs.map(doc => ({ ...doc.data(), id: doc.id })));
       const memberList = allmembers.docs.map(doc => ({ ...doc.data(), id: doc.id }))
