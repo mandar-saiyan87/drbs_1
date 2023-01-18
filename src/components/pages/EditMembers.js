@@ -108,7 +108,7 @@ export default function EditMembers() {
               </div>
               <div className='flex flex-col my-2'>
                 <label className="mr-3" for="reference">शिफारस</label>
-                <input required type="text" name="reference" value={eMember.reference} maxLength="200" className="w-[70%]" onChange={handleUpdate} />
+                <input type="text" name="reference" value={eMember.reference} maxLength="200" className="w-[70%]" onChange={handleUpdate} />
               </div>
               <div className='flex flex-col my-2'>
                 <label for="cars">लाईफ स्टेटस</label>

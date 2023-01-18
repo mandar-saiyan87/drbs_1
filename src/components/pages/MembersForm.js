@@ -146,7 +146,7 @@ export default function MembersForm() {
               </div>
               <div className='flex flex-col my-2'>
                 <label className="mr-3" for="reference">शिफारस</label>
-                <input required type="text" name="reference" value={memberDetails.reference} maxLength="200" className="w-[70%]" onChange={handleChange} />
+                <input type="text" name="reference" value={memberDetails.reference} maxLength="200" className="w-[70%]" onChange={handleChange} />
               </div>
               <div className='flex flex-col my-2'>
                 <label for="cars">लाईफ स्टेटस</label>
