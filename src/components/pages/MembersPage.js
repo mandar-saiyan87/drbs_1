@@ -62,8 +62,8 @@ function MembersPage() {
             return (
               <div className='flex flex-row my-5'>
                 <div className='grid grid-cols-5 w-[85%]' key={index}>
+                  <div>{member.memberno}</div>
                   <div>{member.fullname}</div>
-                  <div>{member.landline === "" ? '-' : member.landline}</div>
                   <div>{member.mobile === "" ? '-' : member.mobile}</div>
                   <div>{member.membership}</div>
                   <div>{member.livingStatus}</div>
