@@ -75,7 +75,7 @@ function EditHallBooking() {
           </div>
           <div className='flex flex-col my-5'>
             <label className="mr-3" for="address">संस्थेचे नाव व पत्ता</label>
-            <textarea required type="text" name="orgaddress" value={eBooking.orgaddress} className="w-[19%]" maxLength="500" onChange={handleUpdate} />
+            <textarea type="text" name="orgaddress" value={eBooking.orgaddress} className="w-[19%]" maxLength="500" onChange={handleUpdate} />
           </div>
           <div className='my-14 border border-black w-[75%]'>
             <div className="grid grid-cols-5 text-center">
@@ -208,7 +208,7 @@ function EditHallBooking() {
             </div>
             <div className='flex flex-col w-[25%]'>
               <label className="text-[1.2rem]">नोंदणीदाराचा कोड नंबर</label>
-              <input required type="text" name="membercode" value={eBooking.membercode} onChange={handleUpdate} />
+              <input type="text" name="membercode" value={eBooking.membercode} onChange={handleUpdate} />
             </div>
           </div>
           <button type="submit" className="submitbtn">Update</button>
