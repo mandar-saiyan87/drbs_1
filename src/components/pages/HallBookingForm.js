@@ -109,7 +109,7 @@ function HallBookingForm() {
           <div className='flex flex-row my-5'>
             <div className='flex flex-col mr-20'>
               <label className="mr-3" for="memberno">संस्थेचा सभासद क्रमांक</label>
-              <input required type="text" name="memberno" value={booking.memberno} className='w-[90%]' maxLength="10" onChange={handleChange} />
+              <input type="text" name="memberno" value={booking.memberno} className='w-[90%]' maxLength="10" onChange={handleChange} />
             </div>
             <div>
               <p className='mr-3'>सभासद वर्ग</p>

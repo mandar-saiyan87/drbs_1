@@ -58,7 +58,7 @@ function EditHallBooking() {
           <div className='flex flex-row my-5'>
             <div className='flex flex-col mr-20'>
               <label className="mr-3" for="memberno">संस्थेचा सभासद क्रमांक</label>
-              <input required type="text" name="memberno" value={eBooking.memberno} className='w-[90%]' maxLength="10" onChange={handleUpdate} />
+              <input type="text" name="memberno" value={eBooking.memberno} className='w-[90%]' maxLength="10" onChange={handleUpdate} />
             </div>
             <div>
               <p className='mr-3'>सभासद वर्ग</p>
@@ -200,7 +200,7 @@ function EditHallBooking() {
           <div className='flex flex-row my-10 justify-between w-[80%]'>
             <div className='flex flex-col w-[10%]'>
               <label className='text-[1.2rem]'>पावती क्रमांक</label>
-              <input required type="text" name="receiptno" value={eBooking.receiptno} onChange={handleUpdate} />
+              <input type="text" name="receiptno" value={eBooking.receiptno} onChange={handleUpdate} />
             </div>
             <div className='flex flex-col w-[20%]'>
               <label className="text-[1.2rem]">दिनांक</label>

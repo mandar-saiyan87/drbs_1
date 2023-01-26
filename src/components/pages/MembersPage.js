@@ -58,7 +58,7 @@ function MembersPage() {
         <hr />
         <div>
           <div className='my-5'></div>
-          {members.map((member, index) => {
+          {members.sort((a, b) => a.memberno > b.memberno ? 1 : -1).map((member, index) => {
             return (
               <div className='flex flex-row my-5'>
                 <div className='grid grid-cols-5 w-[85%]' key={index}>
