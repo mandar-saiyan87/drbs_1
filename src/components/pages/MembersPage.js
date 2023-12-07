@@ -22,11 +22,11 @@ function MembersPage() {
   }
 
   useEffect(() => {
-    if (search.length === 0) {
+    if (search.length === 0 && members.length === 0) {
       getMembers();
     }
     // eslint-disable-next-line
-  }, [deleteMember, search]);
+  }, [deleteMember, search, members]);
 
   function updateMemberDetails(memberData) {
     navigate('/editMembers', { state: memberData })
@@ -58,17 +58,19 @@ function MembersPage() {
         <hr />
         <div>
           <div className='my-5'></div>
-          {members.sort((a, b) => a.memberno > b.memberno ? 1 : -1).map((member, index) => {
+          {members.sort((a, b) => a.memberno > b.memberno ? 1 : -1).map((member) => {
             return (
               <div className='flex flex-row my-5'>
-                <div className='grid grid-cols-5 w-[85%]' key={index}>
-                  <div>{member.memberno}</div>
-                  <div>{member.fullname}</div>
-                  <div>{member.mobile === "" ? '-' : member.mobile}</div>
-                  <div>{member.membership}</div>
-                  <div>{member.livingStatus}</div>
+                <div className='grid grid-cols-5 w-[85%]' key={member}>
+                  <div className='flex items-center justify-center'>
+                    <p>{member.memberno}</p>
+                  </div>
+                  <div className='flex items-center justify-center'><p>{member.fullname}</p></div>
+                  <div className='flex items-center justify-center'><p>{member.mobile === "" ? '-' : member.mobile}</p></div>
+                  <div className='flex items-center justify-center'><p>{member.membership}</p></div>
+                  <div className='flex items-center justify-center'><p>{member.livingStatus}</p></div>
                 </div>
-                <div className='flex flex-row'>
+                <div className='flex flex-row items-center justify-center'>
                   <div className='bg-blue-500 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer' onClick={() => updateMemberDetails(member)}>EDIT</div>
                   <div className='bg-blue-500 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer' onClick={() => deleteMember(member.id)}>DELETE</div>
                 </div>
