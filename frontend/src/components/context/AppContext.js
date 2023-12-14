@@ -30,7 +30,17 @@ function DbsState(props) {
 
   // Get Member Details
   async function getMembers() {
-
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/members/getmembers`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    const data = await req.json()
+    // console.log(data)
+    if (data.status === 'Success') {
+      setMembers(data.members)
+    }
   }
 
   // Get Hall Booking Details
