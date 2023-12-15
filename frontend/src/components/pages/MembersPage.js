@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useLayoutEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from "react-router-dom";
@@ -23,12 +23,10 @@ function MembersPage() {
     exportFromJSON({ data, filename, exportType })
   }
 
-  useEffect(() => {
-    if (search.length === 0) {
-      getMembers();
-    }
+  useLayoutEffect(() => {
+    getMembers();
     // eslint-disable-next-line
-  }, [deleteMember, search, members]);
+  }, []);
 
   function updateMemberDetails(memberData) {
     navigate('/editMembers', { state: memberData })
@@ -62,8 +60,8 @@ function MembersPage() {
           <div className='my-5'></div>
           {members.sort((a, b) => a.memberno - b.memberno).map((member) => {
             return (
-              <div className='flex flex-row my-5'>
-                <div className='grid grid-cols-5 w-[85%]' key={member}>
+              <div className='flex flex-row my-5' key={member._id}>
+                <div className='grid grid-cols-5 w-[85%]'>
                   <div className='flex items-center justify-start'>
                     <p>{member.memberno}</p>
                   </div>
@@ -74,7 +72,7 @@ function MembersPage() {
                 </div>
                 <div className='flex flex-row items-center justify-center'>
                   <div className='bg-blue-500 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer' onClick={() => updateMemberDetails(member)}>EDIT</div>
-                  <div className='bg-blue-500 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer' onClick={() => deleteMember(member.id)}>DELETE</div>
+                  <div className='bg-blue-500 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer' onClick={() => deleteMember(member._id)}>DELETE</div>
                 </div>
               </div>
             )

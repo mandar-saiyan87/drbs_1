@@ -51,6 +51,15 @@ function DbsState(props) {
   // Add new Member Details
   async function addMember(newMember) {
     // console.log(members);
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/members/addmember`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ newMember })
+    })
+    const data = await req.json()
+    console.log(data)
   }
 
   // Add new Hall Booking
@@ -59,7 +68,21 @@ function DbsState(props) {
 
   // Delete Member
   async function deleteMember(id) {
-
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/members/deletemember`, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id })
+    })
+    const data = await req.json()
+    // console.log(data)
+    if (data.status === 'Success') {
+      const new_members = members.filter(member => {
+        return member._id != id
+      })
+      setMembers(new_members)
+    }
   }
 
   // Delete Boooking
