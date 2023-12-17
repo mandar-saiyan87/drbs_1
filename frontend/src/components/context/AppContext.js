@@ -92,7 +92,15 @@ function DbsState(props) {
 
   // Update member
   async function editMember(newMemberDetails, id) {
-
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/members/updatemember`, {
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ newMemberDetails, id })
+    })
+    const data = await req.json()
+    console.log(data)
   }
 
   // Update Booking

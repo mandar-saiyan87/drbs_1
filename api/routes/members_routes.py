@@ -59,5 +59,22 @@ def delete_member():
             return {"status": "Failed", "msg": "Member not deleted"}
         # return {"status": "In progress", "msg": "In progress"}
     except Exception as e:
-        return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}   
+        return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}
+
+
+@member_routes.route('/api/members/updatemember', methods=['PUT'])
+def update_member():
+    data = request.json
+    newData = data['newMemberDetails']
+    memid = ObjectId(data['id'])
+    print(newData)
+    print(memid)
+    try:
+        memberUpdate = mongodb.members.find_one_and_update({'_id': memid}, {'$set': newData})
+        return {"status": "Success", "msg": "Member updated successfully"}
+        # return {"status": "In progress", "msg": "In progress"}
+    except Exception as e:
+        return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}
+            
+    
     

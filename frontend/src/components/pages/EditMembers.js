@@ -16,13 +16,14 @@ export default function EditMembers() {
   }
 
   function handleEdits(member, id) {
+    delete member._id
     editMember(member, id);
     navigate('/');
   }
 
   return (
     <>
-      <form onSubmit={() => handleEdits(eMember, eMember.id)}>
+      <form onSubmit={() => handleEdits(eMember, eMember._id)}>
         <div className='px-9'>
           <div className='my-9'>
             <p className='text-[1.2rem] my-3'>सभासद वर्ग व त्यांची वर्गणी</p>

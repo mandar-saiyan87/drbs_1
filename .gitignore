@@ -7,6 +7,7 @@
 .firebase
 node_modules
 venv
+.cache
 
 # testing
 /coverage
