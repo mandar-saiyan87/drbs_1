@@ -24,11 +24,9 @@ export default function HallBooking() {
 
 
   useEffect(() => {
-    if (bookingSearch.length === 0) {
-      getBookings();
-    }
+    getBookings();
     // eslint-disable-next-line
-  }, [deleteBooking, bookingSearch]);
+  }, []);
 
   function updateBookingDetails(bookingData) {
     navigate('/editHallBooking', { state: bookingData })
@@ -61,8 +59,8 @@ export default function HallBooking() {
           <div className='my-5'></div>
           {bookings.map((booking, index) => {
             return (
-              <div className='flex flex-row my-5'>
-                <div className='grid grid-cols-5 w-[85%]' key={index}>
+              <div className='flex flex-row my-5' key={index}>
+                <div className='grid grid-cols-5 w-[85%]'>
                   <div className='flex items-center justify-start'><p>{booking.fullname}</p></div>
                   <div className='flex items-center justify-start'><p>{booking.hallno}</p></div>
                   <div className='flex items-center justify-start'><p>{booking.event}</p></div>
@@ -71,7 +69,7 @@ export default function HallBooking() {
                 </div>
                 <div className='flex flex-row items-center justify-center'>
                   <div className='bg-blue-500 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer' onClick={() => updateBookingDetails(booking)}>EDIT</div>
-                  <div className='bg-blue-500 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer' onClick={() => deleteBooking(booking.id)}>DELETE</div>
+                  <div className='bg-blue-500 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer' onClick={() => deleteBooking(booking._id)}>DELETE</div>
                 </div>
               </div>
             )

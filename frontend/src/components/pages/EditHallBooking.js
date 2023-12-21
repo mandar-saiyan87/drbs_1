@@ -16,13 +16,14 @@ function EditHallBooking() {
   }
 
   function handleEdits(booking, id) {
+    delete booking._id
     editBooking(booking, id);
     navigate('/hallbookings');
   }
 
   return (
     <>
-      <form onSubmit={() => handleEdits(eBooking, eBooking.id)}>
+      <form onSubmit={() => handleEdits(eBooking, eBooking._id)}>
         <div className='px-9'>
           <div className='my-9'>
             <p className='text-[1.2rem] my-3'>कार्याचा प्रकार</p>

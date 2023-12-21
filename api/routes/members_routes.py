@@ -67,8 +67,8 @@ def update_member():
     data = request.json
     newData = data['newMemberDetails']
     memid = ObjectId(data['id'])
-    print(newData)
-    print(memid)
+    # print(newData)
+    # print(memid)
     try:
         memberUpdate = mongodb.members.find_one_and_update({'_id': memid}, {'$set': newData})
         return {"status": "Success", "msg": "Member updated successfully"}

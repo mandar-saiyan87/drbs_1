@@ -45,7 +45,18 @@ function DbsState(props) {
 
   // Get Hall Booking Details
   async function getBookings() {
-
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/hallbooking/getbookings`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    const data = await req.json()
+    // console.log(data)
+    if (data.status === 'Success') {
+      console.log(data.bookings)
+      setBookings(data.bookings)
+    }
   }
 
   // Add new Member Details
@@ -64,6 +75,15 @@ function DbsState(props) {
 
   // Add new Hall Booking
   async function addBooking(newBooking) {
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/hallbooking/newbooking`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ newBooking })
+    })
+    const data = await req.json()
+    console.log(data)
   }
 
   // Delete Member
@@ -78,8 +98,8 @@ function DbsState(props) {
     const data = await req.json()
     // console.log(data)
     if (data.status === 'Success') {
-      const new_members = members.filter(member => {
-        return member._id != id
+      const new_members = bookings.filter(booking => {
+        return booking._id !== id
       })
       setMembers(new_members)
     }
@@ -87,7 +107,21 @@ function DbsState(props) {
 
   // Delete Boooking
   async function deleteBooking(id) {
-
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/hallbooking/deletebooking`, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id })
+    })
+    const data = await req.json()
+    // console.log(data)
+    if (data.status === 'Success') {
+      const new_bookings = members.filter(member => {
+        return member._id !== id
+      })
+      setBookings(new_bookings)
+    }
   }
 
   // Update member
@@ -105,7 +139,15 @@ function DbsState(props) {
 
   // Update Booking
   async function editBooking(newbookingDetails, id) {
-
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/hallbooking/updatebooking`, {
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ newbookingDetails, id })
+    })
+    const data = await req.json()
+    console.log(data)
   }
 
   return (
