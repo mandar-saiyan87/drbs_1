@@ -1,4 +1,4 @@
-import React, { useContext, useLayoutEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from "react-router-dom";
@@ -23,10 +23,12 @@ function MembersPage() {
     exportFromJSON({ data, filename, exportType })
   }
 
-  useLayoutEffect(() => {
-    getMembers();
+  useEffect(() => {
+    if (search.trim() === "")
+      getMembers();
     // eslint-disable-next-line
-  }, []);
+  }, [search]);
+
 
   function updateMemberDetails(memberData) {
     navigate('/editMembers', { state: memberData })

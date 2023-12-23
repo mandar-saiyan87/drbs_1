@@ -21,10 +21,19 @@ function DbsState(props) {
   // Search Member
 
   async function searchMember(searchquery) {
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/members/search?query=${searchquery}`)
+    const data = await req.json()
+    if (data.status === 'Success') {
+      setMembers(data.members)
+    }
   }
 
   async function searchBooking(searchquery) {
-
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/hallbooking/search?query=${searchquery}`)
+    const data = await req.json()
+    if (data.status === 'Success') {
+      setBookings(data.booking)
+    }
   }
 
 
@@ -117,8 +126,8 @@ function DbsState(props) {
     const data = await req.json()
     // console.log(data)
     if (data.status === 'Success') {
-      const new_bookings = members.filter(member => {
-        return member._id !== id
+      const new_bookings = bookings.filter(booking => {
+        return booking._id !== id
       })
       setBookings(new_bookings)
     }

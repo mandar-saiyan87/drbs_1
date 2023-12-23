@@ -24,9 +24,11 @@ export default function HallBooking() {
 
 
   useEffect(() => {
-    getBookings();
+    if (bookingSearch.trim() === "") {
+      getBookings();
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [bookingSearch]);
 
   function updateBookingDetails(bookingData) {
     navigate('/editHallBooking', { state: bookingData })
@@ -57,9 +59,9 @@ export default function HallBooking() {
         <hr />
         <div>
           <div className='my-5'></div>
-          {bookings.map((booking, index) => {
+          {bookings.map((booking) => {
             return (
-              <div className='flex flex-row my-5' key={index}>
+              <div className='flex flex-row my-5' key={booking._id}>
                 <div className='grid grid-cols-5 w-[85%]'>
                   <div className='flex items-center justify-start'><p>{booking.fullname}</p></div>
                   <div className='flex items-center justify-start'><p>{booking.hallno}</p></div>

@@ -70,11 +70,39 @@ def update_member():
     # print(newData)
     # print(memid)
     try:
-        memberUpdate = mongodb.members.find_one_and_update({'_id': memid}, {'$set': newData})
+        memberUpdate = mongodb.members.find_one_and_update(
+            {'_id': memid}, {'$set': newData})
         return {"status": "Success", "msg": "Member updated successfully"}
         # return {"status": "In progress", "msg": "In progress"}
     except Exception as e:
         return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}
-            
-    
-    
+
+
+@member_routes.route('/api/members/search', methods=['GET'])
+def search_member():
+    search_text = request.args.get('query')
+    # print(type(search_text))
+
+    try:
+        if search_text.isdigit():
+            search_text = int(search_text)
+            search_result = mongodb.members.find(
+                {"memberno": search_text}
+            )
+        else:
+            search_result = mongodb.members.find(
+                {"fullname": {"$regex": f".*{search_text}.*", "$options": "i"}}
+            )
+        search_found = []
+        for result in search_result:
+            result['_id'] = str(result['_id'])
+            search_found.append(result)
+
+        # print(search_found)
+        if len(search_found) > 0:
+            return {"status": "Success", "msg": "Members found", "members": search_found}
+        else:
+            return {"status": "Failed", "msg": "No members found", "members": []}
+        # return {"status": "In progress", "msg": "In progress"}
+    except Exception as e:
+        return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}

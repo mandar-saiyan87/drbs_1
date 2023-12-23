@@ -69,3 +69,20 @@ def update_booking():
         # return {"status": "In progress", "msg": "In progress"}
     except Exception as e:
         return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}
+    
+@hallbooking_routes.route('/api/hallbooking/search', methods=['GET'])
+def search_booking():
+    search_text = request.args.get('query')
+    try:
+        search_result = mongodb.hallbooking.find(
+            {'fullname': {"$regex": f".*{search_text}.*", "$options": "i"}})
+        search_found = []
+        for result in search_result:
+            result['_id'] = str(result['_id'])
+            search_found.append(result)
+        if len(search_found) > 0:
+            return {"status": "Success", "msg": "Booking found", "booking": search_found}
+        else:
+            return {"status": "Failed", "msg": "No booking found", "booking": []}
+    except Exception as e:
+        return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}
