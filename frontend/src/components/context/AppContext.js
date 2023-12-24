@@ -46,7 +46,7 @@ function DbsState(props) {
       }
     })
     const data = await req.json()
-    // console.log(data)
+    console.log(data)
     if (data.status === 'Success') {
       setMembers(data.members)
     }
