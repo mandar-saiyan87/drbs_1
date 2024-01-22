@@ -15,6 +15,7 @@ venv
 # production
 /build
 build
+.firebase
 
 # misc
 .DS_Store
