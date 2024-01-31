@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from "react-router-dom";
 import exportFromJSON from 'export-from-json';
+import Modal from '../widget/Modal';
 
 function MembersPage() {
 
@@ -13,15 +14,17 @@ function MembersPage() {
 
   const [search, setSearch] = useState("")
 
+  const [isModal, setModal] = useState(false)
+
   // const sortedMembers = [...members].sort((a, b) => a.memberno - b.memberno)
 
   const data = members;
   const filename = 'download';
   const exportType = exportFromJSON.types.csv;
 
-  function ExporttoExcel() {
-    exportFromJSON({ data, filename, exportType })
-  }
+  // function ExporttoExcel() {
+  //   exportFromJSON({ data, filename, exportType })
+  // }
 
   useEffect(() => {
     if (search.trim() === "")
@@ -41,11 +44,11 @@ function MembersPage() {
 
   return (
     <>
-      <div className='px-9'>
+      <div className='px-9 relative'>
         <Link to="/membersform">
           <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer max-w-max'>Add Member</div>
         </Link>
-        <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer max-w-max' onClick={ExporttoExcel}>Export</div>
+        <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer max-w-max' onClick={() => setModal(true)}>Export</div>
         <div className='flex flex-row'>
           <input type="text" value={search} className='w-[20%]' onChange={(e) => setSearch(e.target.value)} placeholder='Search' />
           <div className='bg-blue-500 px-4 text-white hover:bg-gray-400 cursor-pointer' onClick={handleSearch}>SEARCH</div>
@@ -80,6 +83,10 @@ function MembersPage() {
             )
           })}
         </div>
+        {
+          isModal && <Modal modalClose={setModal} />
+        }
+
       </div>
     </>
   )

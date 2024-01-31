@@ -159,6 +159,23 @@ function DbsState(props) {
     console.log(data)
   }
 
+  async function exportmembers(columnList) {
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/members/export-excel`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({columnList})
+    })
+    const data = await req.blob()
+    const url = window.URL.createObjectURL(data)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'members_data.csv'
+    link.click()
+    // console.log(url)
+  }
+
   return (
     <>
       <AppContext.Provider value={{
@@ -173,7 +190,8 @@ function DbsState(props) {
         deleteBooking,
         editBooking,
         searchMember,
-        searchBooking
+        searchBooking,
+        exportmembers
       }}>
         {props.children}
       </AppContext.Provider>

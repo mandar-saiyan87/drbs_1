@@ -9,4 +9,4 @@ class DBConfig:
 
 
 class AppConfig:
-    DEBUG = False
+    DEBUG = True
