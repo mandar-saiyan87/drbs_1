@@ -1,6 +1,8 @@
-from flask import Blueprint, request
+import os
+from flask import Blueprint, request, send_file
 from bson import ObjectId
 from db import mongodb
+import pandas as pd
 
 hallbooking_routes = Blueprint('/api/hallbooking', __name__)
 
@@ -84,5 +86,33 @@ def search_booking():
             return {"status": "Success", "msg": "Booking found", "booking": search_found}
         else:
             return {"status": "Failed", "msg": "No booking found", "booking": []}
+    except Exception as e:
+        return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}
+    
+@hallbooking_routes.route('/api/hallbooking/export-excel', methods=['POST'])
+def hallbooking_export():
+    try:
+        req_columns = request.json
+        csv_cols = ['memberno', 'fullname']
+        results = mongodb.hallbooking.find()
+
+        booking_data = []
+        for result in results:
+            result['_id'] = str(result['_id'])
+            booking_data.append(result)
+
+        # print(members_data)
+        if len(booking_data) > 0:
+            df = pd.DataFrame(booking_data).drop('_id', axis=1)
+            if len(req_columns['columnList']) > 0:
+                csv_cols.extend(req_columns['columnList'])
+                df = df[csv_cols]
+
+            df.to_csv('./temp/hallbookings_data.csv', index=False)
+            if os.path.exists('./temp/hallbookings_data.csv'):
+                return send_file('./temp/hallbookings_data.csv', as_attachment=True)
+            # return {"status": "Success", "msg": "CSV created successfully"}
+        else:
+            return {"status": "Failed", "msg": "No CSV found"}
     except Exception as e:
         return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}

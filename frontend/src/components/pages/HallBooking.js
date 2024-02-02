@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from "react-router-dom";
+import HallBookingModal from '../widget/HallBookingModal';
 import exportFromJSON from 'export-from-json';
 
 
@@ -14,13 +15,15 @@ export default function HallBooking() {
 
   const [bookingSearch, setBookingSearch] = useState("")
 
-  const data = bookings;
-  const filename = 'download';
-  const exportType = exportFromJSON.types.csv;
+  const [isModal, setModal] = useState(false)
 
-  function ExporttoExcel() {
-    exportFromJSON({ data, filename, exportType })
-  }
+  // const data = bookings;
+  // const filename = 'download';
+  // const exportType = exportFromJSON.types.csv;
+
+  // function ExporttoExcel() {
+  //   exportFromJSON({ data, filename, exportType })
+  // }
 
 
   useEffect(() => {
@@ -41,10 +44,12 @@ export default function HallBooking() {
   return (
     <>
       <div className='px-9'>
-        <Link to="/hallbookingform">
-          <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer max-w-max'>New Booking</div>
-        </Link>
-        <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer max-w-max' onClick={ExporttoExcel}>Export</div>
+        <div className='max-w-max'>
+          <Link to="/hallbookingform">
+            <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer max-w-max'>New Booking</div>
+          </Link>
+        </div>
+        <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer max-w-max' onClick={() => setModal(true)}>Export</div>
         <div className='flex flex-row'>
           <input type="text" value={bookingSearch} className='w-[20%]' onChange={(e) => setBookingSearch(e.target.value)} placeholder='Search' />
           <div className='bg-blue-500 px-4 text-white hover:bg-gray-400 cursor-pointer' onClick={handleSearch}>SEARCH</div>
@@ -77,6 +82,9 @@ export default function HallBooking() {
             )
           })}
         </div>
+        {
+          isModal && <HallBookingModal modalClose={setModal} />
+        }
       </div>
     </>
   )

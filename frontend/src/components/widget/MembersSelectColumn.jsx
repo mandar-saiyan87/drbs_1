@@ -1,6 +1,6 @@
 import React from 'react'
 
-function SelectColumn({ columns, setColumns }) {
+function MembersSelectColumn({ columns, setColumns }) {
 
   function handleSelect(e) {
     const { checked, value } = e.target
@@ -87,4 +87,4 @@ function SelectColumn({ columns, setColumns }) {
   )
 }
 
-export default SelectColumn
+export default MembersSelectColumn

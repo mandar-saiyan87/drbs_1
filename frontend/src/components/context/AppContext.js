@@ -165,13 +165,30 @@ function DbsState(props) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({columnList})
+      body: JSON.stringify({ columnList })
     })
     const data = await req.blob()
     const url = window.URL.createObjectURL(data)
     const link = document.createElement('a')
     link.href = url
     link.download = 'members_data.csv'
+    link.click()
+    // console.log(url)
+  }
+
+  async function exportHallbookings(columnList) {
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/hallbooking/export-excel`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ columnList })
+    })
+    const data = await req.blob()
+    const url = window.URL.createObjectURL(data)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'hallbookings_data.csv'
     link.click()
     // console.log(url)
   }
@@ -191,7 +208,8 @@ function DbsState(props) {
         editBooking,
         searchMember,
         searchBooking,
-        exportmembers
+        exportmembers,
+        exportHallbookings
       }}>
         {props.children}
       </AppContext.Provider>
