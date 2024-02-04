@@ -120,6 +120,23 @@ def members_export():
         members_data = []
         for result in results:
             result['_id'] = str(result['_id'])
+            if result['membership'] == 'आश्रयदाते':
+                result['membership'] = 'Patrons'
+            elif result['membership'] == 'आजीव':
+                result['membership'] = 'Lifetime'
+            elif result['membership'] == 'हितचिंतक':
+                result['membership'] = 'Well Wisher'
+
+            if result['paymentmode'] == 'रोख':
+                result['paymentmode'] = 'Cash'
+            elif result['paymentmode'] == 'धनादेश':
+                result['paymentmode'] = 'Cheque'
+
+            if result['livingStatus'] == 'हयात':
+                result['livingStatus'] = 'Alive'
+            elif result['livingStatus'] == 'मृत':
+                result['livingStatus'] = 'Deceased'
+
             members_data.append(result)
 
         # print(members_data)
@@ -128,7 +145,7 @@ def members_export():
             if len(req_columns['columnList']) > 0:
                 csv_cols.extend(req_columns['columnList'])
                 df = df[csv_cols]
-                
+
             df.to_csv('./temp/members_data.csv', index=False)
             if os.path.exists('./temp/members_data.csv'):
                 return send_file('./temp/members_data.csv', as_attachment=True)

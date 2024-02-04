@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from "react-router-dom";
-import exportFromJSON from 'export-from-json';
 import MembersModal from '../widget/MembersModal';
 
 function MembersPage() {
