@@ -71,7 +71,8 @@ def update_booking():
         # return {"status": "In progress", "msg": "In progress"}
     except Exception as e:
         return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}
-    
+
+
 @hallbooking_routes.route('/api/hallbooking/search', methods=['GET'])
 def search_booking():
     search_text = request.args.get('query')
@@ -88,7 +89,8 @@ def search_booking():
             return {"status": "Failed", "msg": "No booking found", "booking": []}
     except Exception as e:
         return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}
-    
+
+
 @hallbooking_routes.route('/api/hallbooking/export-excel', methods=['POST'])
 def hallbooking_export():
     try:
@@ -99,6 +101,49 @@ def hallbooking_export():
         booking_data = []
         for result in results:
             result['_id'] = str(result['_id'])
+            if result['event'] == 'लग्न':
+                result['event'] = 'Marriage'
+            elif result['event'] == 'मुंज':
+                result['event'] = 'Munj'
+            elif result['event'] == 'इतर सांस्कृतिक कार्यक्रम':
+                result['event'] = 'Other Cultural Event'
+            elif result['event'] == 'नृत्य':
+                result['event'] = 'Dance'
+            elif result['event'] == 'नाट्य':
+                result['event'] = 'Drama'
+            elif result['event'] == 'संगीत':
+                result['event'] = 'Music'
+            elif result['event'] == 'सभा':
+                result['event'] = 'Gathering'
+            elif result['event'] == 'इतर':
+                result['event'] = 'Other'
+
+            if result['membership'] == 'आश्रयदाते':
+                result['membership'] = 'Patrons'
+            elif result['membership'] == 'आजीव':
+                result['membership'] = 'Lifetime'
+            elif result['membership'] == 'हितचिंतक':
+                result['membership'] = 'Well Wisher'
+
+            if result['bookingtype'] == 'अ':
+                result['bookingtype'] = 'A'
+            elif result['bookingtype'] == 'ब':
+                result['bookingtype'] = 'B'
+            elif result['bookingtype'] == 'क':
+                result['bookingtype'] = 'C'
+            elif result['bookingtype'] == 'ड':
+                result['bookingtype'] = 'D'
+
+            if result['hallno'] == 'सभागृह 1':
+                result['hallno'] = 'Hall 1'
+            elif result['hallno'] == 'सभागृह 2':
+                result['hallno'] = 'Hall 2'
+            elif result['hallno'] == 'दोन्ही':
+                result['hallno'] = 'Both'
+
+            if result['paymentmode'] == 'धनादेश':
+                result['paymentmode'] = 'Cheque'
+
             booking_data.append(result)
 
         # print(members_data)
