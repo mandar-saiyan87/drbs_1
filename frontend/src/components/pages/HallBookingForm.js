@@ -168,8 +168,8 @@ function HallBookingForm() {
           </div>
 
 
-          <div className='flex flex-row my-10 justify-between w-[90%]'>
-            <div className='flex flex-col w-[10%]'>
+          <div className='flex flex-row my-10 justify-start gap-20'>
+            <div className='flex flex-col max-w-max'>
               <label className='text-[1.2rem]'>बुकिंगचा प्रकार</label>
               <select required value={booking.bookingtype} onChange={handleChange} name="bookingtype">
                 <option disabled>Select</option>
@@ -179,7 +179,7 @@ function HallBookingForm() {
                 <option value="ड">ड</option>
               </select>
             </div>
-            <div className='flex flex-col w-[20%]'>
+            <div className='flex flex-col'>
               <label className="text-[1.2rem]" for="dob">कार्यक्रम / समारंभाचा दिवस</label>
               <input required type="date" name="eventdate" value={booking.eventdate} className="w-[95%]" onChange={handleChange} />
             </div>
@@ -198,7 +198,7 @@ function HallBookingForm() {
             </div>
           </div>
 
-          <div className='flex flex-row my-10 justify-between w-[80%]'>
+          <div className='flex flex-row my-10 justify-start gap-20'>
             <div className='flex flex-col w-[10%]'>
               <label className='text-[1.2rem]'>भाडे रुपये</label>
               <input required type="text" name="rent" value={booking.rent} onChange={handleChange} />
@@ -227,37 +227,37 @@ function HallBookingForm() {
           {booking.paymentmode === 'धनादेश' && <>
             <div className="my-10">
               <p className='text-[1.2rem] my-3'>धनादेश तपशील</p>
-              <div className='grid grid-cols-4'>
-                <div className='flex flex-col my-2'>
-                  <label className="mr-3" for="checkno">धनादेश क्र.</label>
-                  <input type="text" name="checkno" value={booking.checkno} className='w-[60%]' maxLength="10" onChange={handleChange} />
+              <div className='flex justify-start gap-20'>
+                <div className='flex flex-col my-2 max-w-max'>
+                  <label className="" for="checkno">धनादेश क्र.</label>
+                  <input type="text" name="checkno" value={booking.checkno} className='max-w-max' maxLength="10" onChange={handleChange} />
                 </div>
                 <div className='flex flex-col my-2'>
-                  <label className="mr-3">दिनांक</label>
-                  <input type="date" name="checkdate" value={booking.checkdate} className='w-[65%]' onChange={handleChange} />
+                  <label className="">दिनांक</label>
+                  <input type="date" name="checkdate" value={booking.checkdate} className='max-w-max' onChange={handleChange} />
                 </div>
                 <div className='flex flex-col my-2'>
-                  <label className="mr-3" for="bank">बँक</label>
-                  <input type="text" name="bankname" value={booking.bankname} className='w-[60%]' onChange={handleChange} />
+                  <label className="" for="bank">बँक</label>
+                  <input type="text" name="bankname" value={booking.bankname} className='max-w-max' onChange={handleChange} />
                 </div>
                 <div className='flex flex-col my-2'>
-                  <label className="mr-3" for="bank">रक्कम रुपये</label>
-                  <input required type="text" name="totalamount" value={booking.totalamount} className='w-[60%]' onChange={handleChange} />
+                  <label className="" for="bank">रक्कम रुपये</label>
+                  <input required type="text" name="totalamount" value={booking.totalamount} className='max-w-max' onChange={handleChange} />
                 </div>
               </div>
             </div>
           </>}
 
-          <div className='flex flex-row my-10 justify-between w-[80%]'>
-            <div className='flex flex-col w-[10%]'>
+          <div className='flex flex-row my-10 justify-start gap-20'>
+            <div className='flex flex-col max-w-max'>
               <label className='text-[1.2rem]'>पावती क्रमांक</label>
               <input type="text" name="receiptno" value={booking.receiptno} onChange={handleChange} />
             </div>
-            <div className='flex flex-col w-[20%]'>
+            <div className='flex flex-col max-w-max'>
               <label className="text-[1.2rem]">दिनांक</label>
-              <input required type="date" name="receiptdate" value={booking.receiptdate} className='w-[65%]' onChange={handleChange} />
+              <input required type="date" name="receiptdate" value={booking.receiptdate} className='max-w-max' onChange={handleChange} />
             </div>
-            <div className='flex flex-col w-[25%]'>
+            <div className='flex flex-col max-w-max'>
               <label className="text-[1.2rem]">नोंदणीदाराचा कोड नंबर</label>
               <input type="text" name="membercode" value={booking.membercode} onChange={handleChange} />
             </div>
