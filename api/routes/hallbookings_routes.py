@@ -114,7 +114,7 @@ def hallbooking_export():
             elif result['event'] == 'संगीत':
                 result['event'] = 'Music'
             elif result['event'] == 'सभा':
-                result['event'] = 'Gathering'
+                result['event'] = 'Meeting'
             elif result['event'] == 'इतर':
                 result['event'] = 'Other'
 

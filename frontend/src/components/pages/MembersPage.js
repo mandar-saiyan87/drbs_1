@@ -43,7 +43,7 @@ function MembersPage() {
 
   return (
     <>
-      <div className='px-9 relative'>
+      <div className='w-full px-9 relative m-auto pb-3'>
         <div className='max-w-max'>
           <Link to="/membersform">
             <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer max-w-max'>Add Member</div>

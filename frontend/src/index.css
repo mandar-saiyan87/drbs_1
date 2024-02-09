@@ -19,9 +19,10 @@ code {
 } */
 
 body {
-  background-color: cadetblue;
+  /* background-color: cadetblue; */
   font-family: 'Poppins';
   overflow-x: hidden;
+  margin: auto;
 }
 
 .submitbtn {

@@ -43,7 +43,7 @@ export default function HallBooking() {
 
   return (
     <>
-      <div className='px-9'>
+      <div className='px-9 pb-3'>
         <div className='max-w-max'>
           <Link to="/hallbookingform">
             <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer max-w-max'>New Booking</div>

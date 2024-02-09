@@ -14,18 +14,20 @@ import EditHallBooking from './components/pages/EditHallBooking';
 function App() {
   return (
     <>
-      <DbsState>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<MembersPage />} />
-          <Route path='/membersform' element={<MembersForm />} />
-          <Route path='/editMembers' element={<EditMembers />} />
-          <Route path='/hallbookings' element={<HallBooking />} />
-          <Route path='/hallbookingform' element={<HallBookingForm />} />
-          <Route path='/editHallBooking' element={<EditHallBooking />} />
-        </Routes>
-      </DbsState>
+      <div className='bg-[cadetblue] max-w-[1536px] m-auto min-h-screen'>
+        <DbsState>
+          <Navbar />
 
+          <Routes>
+            <Route path='/' element={<MembersPage />} />
+            <Route path='/membersform' element={<MembersForm />} />
+            <Route path='/editMembers' element={<EditMembers />} />
+            <Route path='/hallbookings' element={<HallBooking />} />
+            <Route path='/hallbookingform' element={<HallBookingForm />} />
+            <Route path='/editHallBooking' element={<EditHallBooking />} />
+          </Routes>
+        </DbsState>
+      </div>
     </>
   );
 }
