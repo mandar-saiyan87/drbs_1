@@ -14,7 +14,7 @@ import EditHallBooking from './components/pages/EditHallBooking';
 function App() {
   return (
     <>
-      <div className='bg-[cadetblue] max-w-[1536px] m-auto min-h-screen'>
+      <div className='bg-[#d9fbfb] max-w-[1536px] m-auto min-h-screen'>
         <DbsState>
           <Navbar />
 

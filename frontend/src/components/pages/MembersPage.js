@@ -12,7 +12,7 @@ function MembersPage() {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("")
-
+  const [loading, setLoading] = useState(false)
   const [isModal, setModal] = useState(false)
 
   // const sortedMembers = [...members].sort((a, b) => a.memberno - b.memberno)
@@ -26,9 +26,11 @@ function MembersPage() {
   // }
 
   useEffect(() => {
+    setLoading(true)
     if (search.trim() === "")
       getMembers();
     // eslint-disable-next-line
+    setLoading(false)
   }, [search]);
 
 
@@ -46,13 +48,13 @@ function MembersPage() {
       <div className='w-full px-9 relative m-auto pb-3'>
         <div className='max-w-max'>
           <Link to="/membersform">
-            <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer max-w-max'>Add Member</div>
+            <div className='bg-blue-500 py-3 px-4 my-6 text-white hover:bg-gray-400 cursor-pointer max-w-max rounded-md'>Add Member</div>
           </Link>
         </div>
-        <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer max-w-max' onClick={() => setModal(true)}>Export</div>
+        <div className='bg-blue-500 py-3 px-4 my-6 text-white hover:bg-gray-400 cursor-pointer max-w-max rounded-md' onClick={() => setModal(true)}>Export</div>
         <div className='flex flex-row'>
-          <input type="text" value={search} className='w-[20%]' onChange={(e) => setSearch(e.target.value)} placeholder='Search' />
-          <div className='bg-blue-500 px-4 text-white hover:bg-gray-400 cursor-pointer' onClick={handleSearch}>SEARCH</div>
+          <input type="text" value={search} className='w-[20%] p-2 rounded-tl-md rounded-bl-md' onChange={(e) => setSearch(e.target.value)} placeholder='Search'/>
+          <div className='bg-blue-500 px-4 text-white flex items-center justify-center hover:bg-gray-400 cursor-pointer rounded-tr-md rounded-br-md' onClick={handleSearch}>SEARCH</div>
         </div>
         <div className='grid grid-cols-5 mt-10 w-[85%]'>
           <div className='flex text-left'>सभासद क्र.</div>
@@ -61,14 +63,14 @@ function MembersPage() {
           <div className='flex text-left'>सभासद वर्ग</div>
           <div className='flex text-left'>लाईफ स्टेटस</div>
         </div>
-        <hr />
+        <hr className='my-5 border-2 border-gray-400' />
         <div>
-          <div className='my-5'></div>
+          <div className='my-9'></div>
           {members.sort((a, b) => a.memberno - b.memberno).map((member) => {
             return (
-              <div className='flex flex-row my-5' key={member._id}>
-                <div className='grid grid-cols-5 w-[85%]'>
-                  <div className='flex items-center justify-start'>
+              <div className='flex flex-row my-9' key={member._id}>
+                <div className='grid grid-cols-5 w-full'>
+                  <div className=' flex items-center justify-start'>
                     <p>{member.memberno}</p>
                   </div>
                   <div className='flex items-center justify-start'><p>{member.fullname}</p></div>
@@ -77,8 +79,8 @@ function MembersPage() {
                   <div className='flex items-center justify-start'><p>{member.livingStatus}</p></div>
                 </div>
                 <div className='flex flex-row items-center justify-center'>
-                  <div className='bg-blue-500 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer' onClick={() => updateMemberDetails(member)}>EDIT</div>
-                  <div className='bg-blue-500 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer' onClick={() => deleteMember(member._id)}>DELETE</div>
+                  <div className='bg-blue-500 py-1 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer rounded-md' onClick={() => updateMemberDetails(member)}>EDIT</div>
+                  <div className='bg-blue-500 py-1 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer rounded-md' onClick={() => deleteMember(member._id)}>DELETE</div>
                 </div>
               </div>
             )
