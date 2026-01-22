@@ -3,6 +3,7 @@ from flask import Blueprint, request, make_response, send_file
 from bson import ObjectId
 from db import mongodb
 import pandas as pd
+import math
 
 member_routes = Blueprint('/api/members', __name__)
 
@@ -15,15 +16,42 @@ def test_route():
 @member_routes.route('/api/members/getmembers', methods=['GET'])
 def get_members():
     try:
-        results = mongodb.members.find()
+        # results = mongodb.members.find()
         # print(results)
+        # 1️⃣ Read query params
+        page = int(request.args.get('page', 1))
+        limit = int(request.args.get('limit', 10))
+
+        if page < 1:
+            page = 1
+        if limit < 1:
+            limit = 10
+
+        skip = (page - 1) * limit
+
+        # 2️⃣ Query MongoDB with pagination
+        cursor = (
+            mongodb.members
+            .find()
+            .sort("memberno", 1)   # important for consistent pagination
+            .skip(skip)
+            .limit(limit)
+        )
+
         members = []
-        for result in results:
+        for result in cursor:
             result['_id'] = str(result['_id'])
             members.append(result)
 
+        total_records = mongodb.members.count_documents({})
+
         if len(members) > 0:
-            return {"status": "Success", "msg": "Members found", "members": members}
+            return {"status": "Success", "msg": "Members found", "members": members, "pagination": {
+                "page": page,
+                "limit": limit,
+                "totalRecords": total_records,
+                "totalPages": math.ceil(total_records / limit)
+            }}
         else:
             return {"status": "Failed", "msg": "No members found", "members": []}
         # return {"status": "In progress", "msg": "In progress"}

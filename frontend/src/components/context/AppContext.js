@@ -13,9 +13,13 @@ function DbsState(props) {
   const hallBookingsInit = [];
 
 
-  const [members, setMembers] = useState(membersInit);
+  const [searchedMember, setSearchedMember] = useState([])
+  const [searchedBookings, setSearchedBookings] = useState([])
+  const [notFound, setNotFound] = useState(false)
 
-  const [bookings, setBookings] = useState(hallBookingsInit);
+  const [members, setMembers] = useState([]);
+
+  const [bookings, setBookings] = useState([]);
 
 
   // Search Member
@@ -23,8 +27,12 @@ function DbsState(props) {
   async function searchMember(searchquery) {
     const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/members/search?query=${searchquery}`)
     const data = await req.json()
+
     if (data.status === 'Success') {
-      setMembers(data.members)
+      setSearchedMember(data.members)
+    }
+    else if (data.status === 'Failed') {
+      setNotFound(true)
     }
   }
 
@@ -32,8 +40,11 @@ function DbsState(props) {
     const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/hallbooking/search?query=${searchquery}`)
     const data = await req.json()
     if (data.status === 'Success') {
-      setBookings(data.booking)
+      setSearchedBookings(data.bookings)
     }
+    else if (data.status === 'Failed') {
+      setNotFound(true)
+    } 
   }
 
 
@@ -46,7 +57,7 @@ function DbsState(props) {
       }
     })
     const data = await req.json()
-    console.log(data)
+    // console.log(data)
     if (data.status === 'Success') {
       setMembers(data.members)
     }
@@ -63,7 +74,7 @@ function DbsState(props) {
     const data = await req.json()
     // console.log(data)
     if (data.status === 'Success') {
-      console.log(data.bookings)
+      // console.log(data.bookings)
       setBookings(data.bookings)
     }
   }
@@ -209,7 +220,14 @@ function DbsState(props) {
         searchMember,
         searchBooking,
         exportmembers,
-        exportHallbookings
+        exportHallbookings,
+        searchedMember,
+        setSearchedMember,
+        searchedBookings,
+        setSearchedBookings,
+        notFound,
+        setNotFound
+
       }}>
         {props.children}
       </AppContext.Provider>

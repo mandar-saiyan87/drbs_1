@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from "react-router-dom";
 import MembersModal from '../widget/MembersModal';
+import { ScaleLoader } from 'react-spinners'
 
 function MembersPage() {
 
   const context = useContext(AppContext);
 
-  const { members, getMembers, deleteMember, searchMember } = context;
+  const { members, getMembers, deleteMember, searchMember, searchedMember, setSearchedMember, notFound,
+    setNotFound } = context;
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("")
@@ -26,12 +28,14 @@ function MembersPage() {
   // }
 
   useEffect(() => {
-    setLoading(true)
-    if (search.trim() === "")
-      getMembers();
+    async function fetchMembers() {
+      setLoading(true)
+      await getMembers();
+      setLoading(false)
+    }
+    fetchMembers()
     // eslint-disable-next-line
-    setLoading(false)
-  }, [search]);
+  }, []);
 
 
   function updateMemberDetails(memberData) {
@@ -39,9 +43,19 @@ function MembersPage() {
   }
 
 
-  function handleSearch() {
-    searchMember(search)
+  async function handleSearch() {
+    setLoading(true)>
+    await searchMember(search)
+    setLoading(false)
   }
+
+  useEffect(() => {
+    if (search.trim() === "") {
+      setSearchedMember([])
+      setNotFound(false)
+    }
+  }, [search])
+
 
   return (
     <>
@@ -64,10 +78,24 @@ function MembersPage() {
           <div className='flex text-left'>लाईफ स्टेटस</div>
         </div>
         <hr className='my-5 border-2 border-gray-400' />
+        {loading &&
+          <div className="w-full flex items-center justify-center my-10">
+            <ScaleLoader color='#4988C4' loading={loading} />
+          </div>
+        }
         <div>
           <div className='my-9'></div>
-          {members.sort((a, b) => a.memberno - b.memberno).map((member) => {
-            return (
+          {/* {members?.length === 0 && <div className='text-center text-2xl font-bold text-gray-400'>No Members Found</div>} */}
+
+          {search.trim() !== '' && notFound && (
+            <div className="text-center text-2xl font-bold text-gray-400">
+              No Members Found
+            </div>
+          )}
+
+          {search.trim() === '' && members?.length !== 0 && (
+            members.sort((a, b) => a.memberno - b.memberno).map((member) =>
+            (
               <div className='flex flex-row my-9' key={member._id}>
                 <div className='grid grid-cols-5 w-full'>
                   <div className=' flex items-center justify-start'>
@@ -83,8 +111,29 @@ function MembersPage() {
                   <div className='bg-blue-500 py-1 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer rounded-md' onClick={() => deleteMember(member._id)}>DELETE</div>
                 </div>
               </div>
-            )
-          })}
+            ))
+          )}
+
+          {search.trim() !== '' && !notFound &&
+            (searchedMember.map((member) => (
+              <div className='flex flex-row my-9' key={member._id}>
+                <div className='grid grid-cols-5 w-full'>
+                  <div className=' flex items-center justify-start'>
+                    <p>{member.memberno}</p>
+                  </div>
+                  <div className='flex items-center justify-start'><p>{member.fullname}</p></div>
+                  <div className='flex items-center justify-start'><p>{member.mobile === "" ? '-' : member.mobile}</p></div>
+                  <div className='flex items-center justify-start'><p>{member.membership}</p></div>
+                  <div className='flex items-center justify-start'><p>{member.livingStatus}</p></div>
+                </div>
+                <div className='flex flex-row items-center justify-center'>
+                  <div className='bg-blue-500 py-1 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer rounded-md' onClick={() => updateMemberDetails(member)}>EDIT</div>
+                  <div className='bg-blue-500 py-1 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer rounded-md' onClick={() => deleteMember(member._id)}>DELETE</div>
+                </div>
+              </div>
+            )))
+          }
+
         </div>
         {
           isModal && <MembersModal modalClose={setModal} />

@@ -6,7 +6,7 @@
 .pnp.js
 .firebase
 node_modules
-venv
+.venv
 .cache
 
 # testing
