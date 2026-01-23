@@ -10,12 +10,18 @@ function MembersPage() {
   const context = useContext(AppContext);
 
   const { members, getMembers, deleteMember, searchMember, searchedMember, setSearchedMember, notFound,
-    setNotFound } = context;
+    setNotFound, pagination } = context;
+
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("")
   const [loading, setLoading] = useState(false)
   const [isModal, setModal] = useState(false)
+
+
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [membersperPage, setMembersperPage] = useState(15);
+
 
   // const sortedMembers = [...members].sort((a, b) => a.memberno - b.memberno)
 
@@ -27,16 +33,38 @@ function MembersPage() {
   //   exportFromJSON({ data, filename, exportType })
   // }
 
+  console.log(pagination)
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [membersperPage, setMembersperPage] = useState(20);
+
+
   useEffect(() => {
     async function fetchMembers() {
       setLoading(true)
-      await getMembers();
+      await getMembers(currentPage, membersperPage);
       setLoading(false)
     }
     fetchMembers()
     // eslint-disable-next-line
   }, []);
 
+  async function handlePageChange(direction) {
+    if (direction === 'next') {
+      const setPage = currentPage >= pagination?.totalPages ? currentPage : currentPage + 1
+      setCurrentPage(setPage)
+      setLoading(true)
+      await getMembers(setPage, membersperPage);
+      setLoading(false)
+    }
+    else if (direction === 'prev') {
+      const setPage = currentPage <= 1 ? currentPage : currentPage - 1
+      setCurrentPage(setPage)
+      setLoading(true)
+      await getMembers(setPage, membersperPage);
+      setLoading(false)
+    }
+  }
 
   function updateMemberDetails(memberData) {
     navigate('/editMembers', { state: memberData })
@@ -44,7 +72,7 @@ function MembersPage() {
 
 
   async function handleSearch() {
-    setLoading(true)>
+    setLoading(true)
     await searchMember(search)
     setLoading(false)
   }
@@ -55,6 +83,9 @@ function MembersPage() {
       setNotFound(false)
     }
   }, [search])
+
+
+
 
 
   return (
@@ -70,6 +101,28 @@ function MembersPage() {
           <input type="text" value={search} className='w-[20%] p-2 rounded-tl-md rounded-bl-md' onChange={(e) => setSearch(e.target.value)} placeholder='Search'/>
           <div className='bg-blue-500 px-4 text-white flex items-center justify-center hover:bg-gray-400 cursor-pointer rounded-tr-md rounded-br-md' onClick={handleSearch}>SEARCH</div>
         </div>
+
+        {/* Pagination Section Start */}
+        <div className='flex flex-col items-start justify-center max-w-max mt-10'>
+          <div className='flex items-center justify-start gap-4'>
+            <input type="number" value={currentPage} className='text-center p-1 max-w-min' onChange={(e) => setCurrentPage(e.target.value)} />
+            <p className='font-semibold'>of {pagination.totalPages} Pages</p>
+          </div>
+
+          <div className='flex gap-5 my-5'>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={4} stroke="currentColor" className="size-5 cursor-pointer">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" onClick={() => handlePageChange('prev')} />
+            </svg>
+
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={4} stroke="currentColor" className="size-5 cursor-pointer">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" onClick={() => handlePageChange('next')} />
+            </svg>
+          </div>
+        </div>
+
+        {/* Pagination Section End */}
+
         <div className='grid grid-cols-5 mt-10 w-[85%]'>
           <div className='flex text-left'>सभासद क्र.</div>
           <div className='flex text-left'>संपूर्ण नांव</div>

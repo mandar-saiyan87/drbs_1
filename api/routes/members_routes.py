@@ -18,7 +18,7 @@ def get_members():
     try:
         # results = mongodb.members.find()
         # print(results)
-        # 1️⃣ Read query params
+        #  Read query params
         page = int(request.args.get('page', 1))
         limit = int(request.args.get('limit', 10))
 
@@ -29,7 +29,7 @@ def get_members():
 
         skip = (page - 1) * limit
 
-        # 2️⃣ Query MongoDB with pagination
+        # Query MongoDB with pagination
         cursor = (
             mongodb.members
             .find()

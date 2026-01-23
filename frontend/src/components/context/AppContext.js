@@ -17,6 +17,8 @@ function DbsState(props) {
   const [searchedBookings, setSearchedBookings] = useState([])
   const [notFound, setNotFound] = useState(false)
 
+  const [pagination, setPagination] = useState({})
+
   const [members, setMembers] = useState([]);
 
   const [bookings, setBookings] = useState([]);
@@ -49,8 +51,8 @@ function DbsState(props) {
 
 
   // Get Member Details
-  async function getMembers() {
-    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/members/getmembers`, {
+  async function getMembers(page, limit) {
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/members/getmembers?page=${page}&limit=${limit}`, {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
@@ -60,6 +62,7 @@ function DbsState(props) {
     // console.log(data)
     if (data.status === 'Success') {
       setMembers(data.members)
+      setPagination(data.pagination)
     }
   }
 
@@ -226,7 +229,8 @@ function DbsState(props) {
         searchedBookings,
         setSearchedBookings,
         notFound,
-        setNotFound
+        setNotFound,
+        pagination
 
       }}>
         {props.children}
