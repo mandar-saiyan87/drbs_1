@@ -30,7 +30,7 @@ def get_members():
         skip = (page - 1) * limit
 
         # Query MongoDB with pagination
-        cursor = (
+        member_list = (
             mongodb.members
             .find()
             .sort("memberno", 1)   # important for consistent pagination
@@ -39,7 +39,7 @@ def get_members():
         )
 
         members = []
-        for result in cursor:
+        for result in member_list:
             result['_id'] = str(result['_id'])
             members.append(result)
 
@@ -113,15 +113,35 @@ def search_member():
     search_text = request.args.get('query')
     # print(type(search_text))
 
+    page = int(request.args.get('page', 1))
+    limit = int(request.args.get('limit', 10))
+
+    if page < 1:
+        page = 1
+    if limit < 1:
+        limit = 10
+
+    skip = (page - 1) * limit
+
     try:
         if search_text.isdigit():
             search_text = int(search_text)
-            search_result = mongodb.members.find(
+            search_result = (
+                mongodb.members.find(
                 {"memberno": search_text}
+                )
+                .sort("memberno", 1)
+                .skip(skip)
+                .limit(limit)
             )
         else:
-            search_result = mongodb.members.find(
+            search_result = (
+                mongodb.members.find(
                 {"fullname": {"$regex": f".*{search_text}.*", "$options": "i"}}
+            )
+                .sort("memberno", 1)
+                .skip(skip)
+                .limit(limit)
             )
         search_found = []
         for result in search_result:
@@ -130,7 +150,14 @@ def search_member():
 
         # print(search_found)
         if len(search_found) > 0:
-            return {"status": "Success", "msg": "Members found", "members": search_found}
+            return {"status": "Success", "msg": "Members found", "members": search_found,
+
+                    "pagination": {
+                        "page": page,
+                        "limit": limit,
+                        "totalRecords": len(search_found),
+                        "totalPages": math.ceil(len(search_found) / limit)
+                    }}
         else:
             return {"status": "Failed", "msg": "No members found", "members": []}
         # return {"status": "In progress", "msg": "In progress"}
