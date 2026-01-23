@@ -18,6 +18,7 @@ function DbsState(props) {
   const [notFound, setNotFound] = useState(false)
 
   const [pagination, setPagination] = useState({})
+  const [searchpagination, setSearchPagination] = useState({})
 
   const [members, setMembers] = useState([]);
 
@@ -32,14 +33,15 @@ function DbsState(props) {
 
     if (data.status === 'Success') {
       setSearchedMember(data.members)
+      setSearchPagination(data.pagination)
     }
     else if (data.status === 'Failed') {
       setNotFound(true)
     }
   }
 
-  async function searchBooking(searchquery) {
-    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/hallbooking/search?query=${searchquery}`)
+  async function searchBooking(searchquery, page, limit) {
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/hallbooking/search?query=${searchquery}&page=${page}&limit=${limit}`)
     const data = await req.json()
     if (data.status === 'Success') {
       setSearchedBookings(data.bookings)
@@ -230,7 +232,8 @@ function DbsState(props) {
         setSearchedBookings,
         notFound,
         setNotFound,
-        pagination
+        pagination,
+        searchpagination
 
       }}>
         {props.children}

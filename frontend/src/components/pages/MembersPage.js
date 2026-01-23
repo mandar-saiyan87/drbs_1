@@ -10,7 +10,7 @@ function MembersPage() {
   const context = useContext(AppContext);
 
   const { members, getMembers, deleteMember, searchMember, searchedMember, setSearchedMember, notFound,
-    setNotFound, pagination } = context;
+    setNotFound, pagination, searchpagination } = context;
 
   const navigate = useNavigate();
 
@@ -50,20 +50,47 @@ function MembersPage() {
   }, []);
 
   async function handlePageChange(direction) {
+    setLoading(true)
+
     if (direction === 'next') {
-      const setPage = currentPage >= pagination?.totalPages ? currentPage : currentPage + 1
+
+      const totalPages = search ? searchpagination?.totalPages : pagination?.totalPages
+
+      if (currentPage >= totalPages) {
+        setLoading(false)
+        return
+      }
+
+      const setPage = currentPage + 1
       setCurrentPage(setPage)
-      setLoading(true)
-      await getMembers(setPage, membersperPage);
-      setLoading(false)
+
+      if (search) {
+        await searchMember(search, setPage, membersperPage)
+      }
+      else {
+        await getMembers(setPage, membersperPage);
+      }
     }
+
     else if (direction === 'prev') {
-      const setPage = currentPage <= 1 ? currentPage : currentPage - 1
+
+      if (currentPage <= 1) {
+        setLoading(false)
+        return
+      }
+
+      const setPage =  currentPage - 1
       setCurrentPage(setPage)
-      setLoading(true)
-      await getMembers(setPage, membersperPage);
-      setLoading(false)
+
+      if (search) {
+        await searchMember(search, setPage, membersperPage)
+      }
+      else {
+        await getMembers(setPage, membersperPage);
+      }
+
     }
+    setLoading(false)
   }
 
   function updateMemberDetails(memberData) {
@@ -73,7 +100,7 @@ function MembersPage() {
 
   async function handleSearch() {
     setLoading(true)
-    await searchMember(search)
+    await searchMember(search, currentPage, membersperPage)
     setLoading(false)
   }
 
