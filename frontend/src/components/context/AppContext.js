@@ -5,12 +5,6 @@ const AppContext = createContext();
 
 function DbsState(props) {
 
-  // Firebase Collection
-
-
-  const membersInit = [];
-
-  const hallBookingsInit = [];
 
 
   const [searchedMember, setSearchedMember] = useState([])
