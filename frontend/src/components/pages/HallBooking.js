@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from "react-router-dom";
 import HallBookingModal from '../widget/HallBookingModal';
-import exportFromJSON from 'export-from-json';
+
 
 
 export default function HallBooking() {
