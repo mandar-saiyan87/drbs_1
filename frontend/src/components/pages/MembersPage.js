@@ -33,7 +33,7 @@ function MembersPage() {
   //   exportFromJSON({ data, filename, exportType })
   // }
 
-  console.log(pagination)
+  // console.log(pagination)
 
   const [currentPage, setCurrentPage] = useState(1);
   const [membersperPage, setMembersperPage] = useState(20);
@@ -113,7 +113,24 @@ function MembersPage() {
 
 
 
+  function pageInputHandler(e) {
+    const rawValue = e.target.value; // Keep it as a string
+    const numericVal = Number(rawValue);
 
+    // Check if it's empty OR within range
+    if (rawValue === '' || (numericVal >= 1 && numericVal <= pagination.totalPages)) {
+      // PASS THE STRING, NOT THE NUMBER
+      setCurrentPage(rawValue);
+    }
+  }
+
+  async function handleEnterKey(e) {
+    if (e.key === 'Enter') {
+      setLoading(true)
+      await getMembers(currentPage, membersperPage);
+      setLoading(false)
+    }
+  }
 
   return (
     <>
@@ -132,7 +149,7 @@ function MembersPage() {
         {/* Pagination Section Start */}
         <div className='flex flex-col items-start justify-center max-w-max mt-10'>
           <div className='flex items-center justify-start gap-4'>
-            <input type="number" value={currentPage} className='text-center p-1 max-w-min' onChange={(e) => setCurrentPage(e.target.value)} />
+            <input type="number" value={currentPage} className='w-full max-w-[90px] text-center p-1' onChange={(e) => pageInputHandler(e)} onKeyDown={handleEnterKey} />
             <p className='font-semibold'>of {pagination.totalPages} Pages</p>
           </div>
 
