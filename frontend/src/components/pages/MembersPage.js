@@ -150,7 +150,10 @@ function MembersPage() {
         <div className='flex flex-col items-start justify-center max-w-max mt-10'>
           <div className='flex items-center justify-start gap-4'>
             <input type="number" value={currentPage} className='w-full max-w-[90px] text-center p-1' onChange={(e) => pageInputHandler(e)} onKeyDown={handleEnterKey} />
-            <p className='font-semibold'>of {pagination.totalPages} Pages</p>
+            { 
+              search && searchpagination ? <p className='font-semibold'>of {searchpagination?.totalPages} Pages</p> : <p className='font-semibold'>of {pagination?.totalPages} Pages</p>
+            }
+            
           </div>
 
           <div className='flex gap-5 my-5'>

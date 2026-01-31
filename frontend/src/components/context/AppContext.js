@@ -21,11 +21,12 @@ function DbsState(props) {
 
   // Search Member
 
-  async function searchMember(searchquery) {
-    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/members/search?query=${searchquery}`)
+  async function searchMember(searchquery, page, limit) {
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/members/search?query=${searchquery}&page=${page}&limit=${limit}`)
     const data = await req.json()
 
     if (data.status === 'Success') {
+      console.log(data.pagination)
       setSearchedMember(data.members)
       setSearchPagination(data.pagination)
     }
