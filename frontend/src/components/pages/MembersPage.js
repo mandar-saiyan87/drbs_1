@@ -36,7 +36,7 @@ function MembersPage() {
   // console.log(pagination)
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [membersperPage, _] = useState(20)
+  const [membersperPage, setMembersPage] = useState(20)
 
 
   useEffect(() => {
@@ -109,7 +109,7 @@ function MembersPage() {
       setSearchedMember([])
       setNotFound(false)
     }
-  }, [search, setNotFound, setNotFound])
+  }, [search])
 
 
 
