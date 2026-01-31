@@ -26,7 +26,6 @@ function DbsState(props) {
     const data = await req.json()
 
     if (data.status === 'Success') {
-      console.log(data.pagination)
       setSearchedMember(data.members)
       setSearchPagination(data.pagination)
     }
