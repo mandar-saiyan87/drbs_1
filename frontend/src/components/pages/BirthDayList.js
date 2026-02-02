@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { AppContext } from '../context/AppContext'
 import { dateFormat, dobFormat } from '../../helper/dateFunc'
+import { ScaleLoader } from 'react-spinners'
 
 
 function BirthDayList() {
@@ -9,10 +10,14 @@ function BirthDayList() {
 
   const { allmembers, getAllMembers } = context
 
+  const [loading, setLoading] = useState(false)
+
   // const today = new Date(currentIST).toISOString().split('T')[0];
 
   useEffect(() => {
+    setLoading(true)
     getAllMembers()
+    setLoading(false)
   })
 
   return (
@@ -24,16 +29,21 @@ function BirthDayList() {
           <p>Birthday</p>
         </div>
         <div>
-          {allmembers.map(member => {
-
+          {loading &&
+            <div className="w-full flex items-center justify-center my-10">
+              <ScaleLoader color='#4988C4' loading={loading} />
+            </div>
+          }
+          {!loading && allmembers && (allmembers.map(member => {
             return (
               // <div key={member._id}>{member.fullname}</div>
+
               <div className='grid grid-cols-2 gap-5 my-2' key={member._id}>
                 <p>{member?.fullname}</p>
                 <p>{dobFormat(member?.dob)}</p>
               </div>
             )
-          })}
+          }))}
         </div>
       </div>
     </div>
