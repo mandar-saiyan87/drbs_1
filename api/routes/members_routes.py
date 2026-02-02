@@ -13,6 +13,26 @@ def test_route():
     return {'Status': 'Ok', 'code': 200}
 
 
+@member_routes.route('/api/members/allmembers', methods=['GET'])
+def get_all_members():
+
+    try:
+        member_list = mongodb.members.find()
+
+        members = []
+        for result in member_list:
+            result['_id'] = str(result['_id'])
+            members.append(result)
+
+        if len(members) > 0:
+            return {"status": "Success", "msg": "Members found", "members": members, }
+        else:
+            return {"status": "Failed", "msg": "No members found", "members": []}
+
+    except Exception as e:
+        return {'status': 'Failed', 'msg': 'Something went wrong', 'error': str(e)}
+
+
 @member_routes.route('/api/members/getmembers', methods=['GET'])
 def get_members():
     try:
@@ -128,7 +148,7 @@ def search_member():
             search_text = int(search_text)
             search_result = (
                 mongodb.members.find(
-                {"memberno": search_text}
+                    {"memberno": search_text}
                 )
                 .sort("memberno", 1)
                 .skip(skip)
@@ -137,8 +157,8 @@ def search_member():
         else:
             search_result = (
                 mongodb.members.find(
-                {"fullname": {"$regex": f".*{search_text}.*", "$options": "i"}}
-            )
+                    {"fullname": {"$regex": f".*{search_text}.*", "$options": "i"}}
+                )
                 .sort("memberno", 1)
                 .skip(skip)
                 .limit(limit)

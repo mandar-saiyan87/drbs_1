@@ -15,6 +15,9 @@ export default function Navbar() {
           <div className='text-white text-xl cursor-pointer'>
             <Link to="/hallbookings">Hall Booking</Link>
           </div>
+          <div className='text-white text-xl cursor-pointer'>
+            <Link to="/Birthdays">Birthdays</Link>
+          </div>
         </div>
         <p className='text-white cursor-pointer active:opacity-60' onClick={() => setRef(true)}>Label Ref</p>
         {ref && <RefModal onClose={setRef} />}

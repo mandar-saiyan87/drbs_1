@@ -18,6 +18,8 @@ function DbsState(props) {
 
   const [bookings, setBookings] = useState([]);
 
+  const [allmembers, setAllmembers] = useState([])
+
 
   // Search Member
 
@@ -59,6 +61,21 @@ function DbsState(props) {
     if (data.status === 'Success') {
       setMembers(data.members)
       setPagination(data.pagination)
+    }
+  }
+
+  // Get All Members
+  async function getAllMembers() {
+    const req = await fetch(`${process.env.REACT_APP_API_SRV}/api/members/allmembers`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    const data = await req.json()
+    // console.log(data)
+    if (data.status === 'Success') {
+      setAllmembers(data.members)
     }
   }
 
@@ -227,8 +244,9 @@ function DbsState(props) {
         notFound,
         setNotFound,
         pagination,
-        searchpagination
-
+        searchpagination,
+        getAllMembers,
+        allmembers
       }}>
         {props.children}
       </AppContext.Provider>

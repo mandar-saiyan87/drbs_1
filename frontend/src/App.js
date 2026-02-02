@@ -9,6 +9,7 @@ import EditMembers from './components/pages/EditMembers';
 import HallBooking from './components/pages/HallBooking';
 import HallBookingForm from './components/pages/HallBookingForm';
 import EditHallBooking from './components/pages/EditHallBooking';
+import BirthDayList from './components/pages/BirthDayList';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path='/hallbookings' element={<HallBooking />} />
             <Route path='/hallbookingform' element={<HallBookingForm />} />
             <Route path='/editHallBooking' element={<EditHallBooking />} />
+            <Route path='/Birthdays' element={<BirthDayList />} />
           </Routes>
         </DbsState>
       </div>
