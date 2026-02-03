@@ -46,13 +46,14 @@ export default function HallBooking() {
       <div className='px-9 pb-3'>
         <div className='max-w-max'>
           <Link to="/hallbookingform">
-            <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer max-w-max'>New Booking</div>
+            <div className='bg-blue-500 py-3 px-4 my-6 text-white hover:bg-gray-400 cursor-pointer max-w-max rounded-md'>New Booking</div>
           </Link>
         </div>
-        <div className='bg-blue-500 p-3 my-5 text-white hover:bg-gray-400 cursor-pointer max-w-max' onClick={() => setModal(true)}>Export</div>
+        <div className='bg-blue-500 py-3 px-4 my-6 text-white hover:bg-gray-400 cursor-pointer max-w-max rounded-md' onClick={() => setModal(true)}>Export</div>
         <div className='flex flex-row'>
-          <input type="text" value={bookingSearch} className='w-[20%]' onChange={(e) => setBookingSearch(e.target.value)} placeholder='Search' />
-          <div className='bg-blue-500 px-4 text-white hover:bg-gray-400 cursor-pointer' onClick={handleSearch}>SEARCH</div>
+          <input type="text" value={bookingSearch} className='w-[20%] p-2 rounded-tl-md rounded-bl-md' onChange={(e) => setBookingSearch(e.target.value)} placeholder='Search' />
+          <div className='bg-blue-500 px-4 text-white flex items-center justify-center hover:bg-gray-400 cursor-pointer rounded-tr-md rounded-br-md'
+            onClick={handleSearch}>SEARCH</div>
         </div>
         <div className='grid grid-cols-5 mt-10 w-[85%]'>
           <div className='flex text-left'>संपूर्ण नांव</div>
@@ -75,8 +76,9 @@ export default function HallBooking() {
                   <div className='flex items-center justify-start'><p>{booking.bookingtype}</p></div>
                 </div>
                 <div className='flex flex-row items-center justify-center'>
-                  <div className='bg-blue-500 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer' onClick={() => updateBookingDetails(booking)}>EDIT</div>
-                  <div className='bg-blue-500 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer' onClick={() => deleteBooking(booking._id)}>DELETE</div>
+                  <div className='bg-blue-500 py-1 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer rounded-md'
+                    onClick={() => updateBookingDetails(booking)}>EDIT</div>
+                  <div className='bg-blue-500 py-1 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer rounded-md' onClick={() => deleteBooking(booking._id)}>DELETE</div>
                 </div>
               </div>
             )
