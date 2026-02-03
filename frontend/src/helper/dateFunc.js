@@ -1,10 +1,21 @@
 export function dateFormat() {
-    const currentIST = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })
-    const datewoTime = currentIST.split(',')[0]
-    const currentDate = datewoTime.split('/')
-    return (`${currentDate[0]}/${currentDate[1]}`)
+    // const testdate = new Date("9/20/1995")
+    const currentIST = new Date().toLocaleString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        timeZone: 'Asia/Kolkata'
+    })
+
+    return currentIST
 }
 
-export function dobFormat(date) {
-    return date
+export function dobFormat(dob) {
+    const dateObj = new Date(dob)
+
+    const formatted = dateObj.toLocaleString('en-GB', {
+        day: 'numeric',
+        month: 'long'
+    });
+
+    return formatted
 }

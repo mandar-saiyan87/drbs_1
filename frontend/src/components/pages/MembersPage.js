@@ -19,22 +19,6 @@ function MembersPage() {
   const [isModal, setModal] = useState(false)
 
 
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [membersperPage, setMembersperPage] = useState(15);
-
-
-  // const sortedMembers = [...members].sort((a, b) => a.memberno - b.memberno)
-
-  // const data = members;
-  // const filename = 'download';
-  // const exportType = exportFromJSON.types.csv;
-
-  // function ExporttoExcel() {
-  //   exportFromJSON({ data, filename, exportType })
-  // }
-
-  // console.log(pagination)
-
   const [currentPage, setCurrentPage] = useState(1);
   const [membersperPage, setMembersPage] = useState(20)
 
@@ -79,7 +63,7 @@ function MembersPage() {
         return
       }
 
-      const setPage =  currentPage - 1
+      const setPage = currentPage - 1
       setCurrentPage(setPage)
 
       if (search) {
@@ -142,31 +126,34 @@ function MembersPage() {
         </div>
         <div className='bg-blue-500 py-3 px-4 my-6 text-white hover:bg-gray-400 cursor-pointer max-w-max rounded-md' onClick={() => setModal(true)}>Export</div>
         <div className='flex flex-row'>
-          <input type="text" value={search} className='w-[20%] p-2 rounded-tl-md rounded-bl-md' onChange={(e) => setSearch(e.target.value)} placeholder='Search'/>
+          <input type="text" value={search} className='w-[20%] p-2 rounded-tl-md rounded-bl-md' onChange={(e) => setSearch(e.target.value)} placeholder='Search' />
           <div className='bg-blue-500 px-4 text-white flex items-center justify-center hover:bg-gray-400 cursor-pointer rounded-tr-md rounded-br-md' onClick={handleSearch}>SEARCH</div>
         </div>
 
         {/* Pagination Section Start */}
-        <div className='flex flex-col items-start justify-center max-w-max mt-10'>
-          <div className='flex items-center justify-start gap-4'>
-            <input type="number" value={currentPage} className='w-full max-w-[90px] text-center p-1' onChange={(e) => pageInputHandler(e)} onKeyDown={handleEnterKey} />
-            { 
-              search && searchpagination ? <p className='font-semibold'>of {searchpagination?.totalPages} Pages</p> : <p className='font-semibold'>of {pagination?.totalPages} Pages</p>
-            }
-            
+        {members.length === 0 || searchedMember.length === 0 && (
+          <div className='flex flex-col items-start justify-center max-w-max mt-10'>
+            <div className='flex items-center justify-start gap-4'>
+              <input type="number" value={currentPage} className='w-full max-w-[90px] text-center p-1' onChange={(e) => pageInputHandler(e)} onKeyDown={handleEnterKey} />
+              {
+                search && searchpagination ? <p className='font-semibold'>of {searchpagination?.totalPages} Pages</p> : <p className='font-semibold'>of {pagination?.totalPages} Pages</p>
+              }
+
+            </div>
+
+            <div className='flex gap-5 my-5'>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={4} stroke="currentColor" className="size-5 cursor-pointer">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" onClick={() => handlePageChange('prev')} />
+              </svg>
+
+
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={4} stroke="currentColor" className="size-5 cursor-pointer">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" onClick={() => handlePageChange('next')} />
+              </svg>
+            </div>
           </div>
+        )}
 
-          <div className='flex gap-5 my-5'>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={4} stroke="currentColor" className="size-5 cursor-pointer">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" onClick={() => handlePageChange('prev')} />
-            </svg>
-
-
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={4} stroke="currentColor" className="size-5 cursor-pointer">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" onClick={() => handlePageChange('next')} />
-            </svg>
-          </div>
-        </div>
 
         {/* Pagination Section End */}
 
@@ -193,7 +180,7 @@ function MembersPage() {
             </div>
           )}
 
-          {search.trim() === '' && members?.length !== 0 && (
+          {search.trim() === '' && members?.length !== 0 ? (
             members.sort((a, b) => a.memberno - b.memberno).map((member) =>
             (
               <div className='flex flex-row my-9' key={member._id}>
@@ -212,9 +199,9 @@ function MembersPage() {
                 </div>
               </div>
             ))
-          )}
+          ) : ''}
 
-          {search.trim() !== '' && !notFound &&
+          {search.trim() !== '' && !notFound ?
             (searchedMember.map((member) => (
               <div className='flex flex-row my-9' key={member._id}>
                 <div className='grid grid-cols-5 w-full'>
@@ -231,7 +218,7 @@ function MembersPage() {
                   <div className='bg-blue-500 py-1 px-4 mx-2 text-white hover:bg-gray-400 cursor-pointer rounded-md' onClick={() => deleteMember(member._id)}>DELETE</div>
                 </div>
               </div>
-            )))
+            ))) : ''
           }
 
         </div>
