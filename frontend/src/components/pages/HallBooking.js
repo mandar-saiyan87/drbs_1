@@ -17,15 +17,6 @@ export default function HallBooking() {
 
   const [isModal, setModal] = useState(false)
 
-  // const data = bookings;
-  // const filename = 'download';
-  // const exportType = exportFromJSON.types.csv;
-
-  // function ExporttoExcel() {
-  //   exportFromJSON({ data, filename, exportType })
-  // }
-
-
   useEffect(() => {
     if (bookingSearch.trim() === "") {
       getBookings();
