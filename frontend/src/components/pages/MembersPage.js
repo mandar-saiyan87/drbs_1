@@ -22,6 +22,8 @@ function MembersPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [membersperPage, setMembersPage] = useState(20)
 
+  console.log(searchpagination)
+
 
   useEffect(() => {
     async function fetchMembers() {
@@ -45,7 +47,7 @@ function MembersPage() {
         return
       }
 
-      const setPage = currentPage + 1
+      const setPage = parseInt(currentPage) + 1
       setCurrentPage(setPage)
 
       if (search) {
@@ -63,7 +65,7 @@ function MembersPage() {
         return
       }
 
-      const setPage = currentPage - 1
+      const setPage = parseInt(currentPage) - 1
       setCurrentPage(setPage)
 
       if (search) {
@@ -98,11 +100,12 @@ function MembersPage() {
 
 
   function pageInputHandler(e) {
+    const totalPages = search ? searchpagination?.totalPages : pagination?.totalPages
     const rawValue = e.target.value; // Keep it as a string
     const numericVal = Number(rawValue);
 
     // Check if it's empty OR within range
-    if (rawValue === '' || (numericVal >= 1 && numericVal <= pagination.totalPages)) {
+    if (rawValue === '' || (numericVal >= 1 && numericVal <= totalPages)) {
       // PASS THE STRING, NOT THE NUMBER
       setCurrentPage(rawValue);
     }
@@ -111,7 +114,13 @@ function MembersPage() {
   async function handleEnterKey(e) {
     if (e.key === 'Enter') {
       setLoading(true)
-      await getMembers(currentPage, membersperPage);
+      if (search) {
+        await searchMember(search, currentPage, membersperPage)
+      }
+      else {
+
+        await getMembers(currentPage, membersperPage);
+      }
       setLoading(false)
     }
   }
@@ -131,7 +140,7 @@ function MembersPage() {
         </div>
 
         {/* Pagination Section Start */}
-        {members.length === 0 || searchedMember.length === 0 && (
+        {/* {members.length === 0 || searchedMember.length === 0 && (
           <div className='flex flex-col items-start justify-center max-w-max mt-10'>
             <div className='flex items-center justify-start gap-4'>
               <input type="number" value={currentPage} className='w-full max-w-[90px] text-center p-1' onChange={(e) => pageInputHandler(e)} onKeyDown={handleEnterKey} />
@@ -152,7 +161,30 @@ function MembersPage() {
               </svg>
             </div>
           </div>
-        )}
+        )} */}
+
+
+        <div className='flex flex-col items-start justify-center max-w-max mt-10'>
+          <div className='flex items-center justify-start gap-4'>
+            <input type="number" value={currentPage} className='w-full max-w-[90px] text-center p-1' onChange={(e) => pageInputHandler(e)} onKeyDown={handleEnterKey} />
+            {
+              search && searchpagination ? <p className='font-semibold'>of {searchpagination?.totalPages} Pages</p> : <p className='font-semibold'>of {pagination?.totalPages} Pages</p>
+            }
+
+          </div>
+
+          <div className='flex gap-5 my-5'>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={4} stroke="currentColor" className="size-5 cursor-pointer">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" onClick={() => handlePageChange('prev')} />
+            </svg>
+
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={4} stroke="currentColor" className="size-5 cursor-pointer">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" onClick={() => handlePageChange('next')} />
+            </svg>
+          </div>
+        </div>
+
 
 
         {/* Pagination Section End */}

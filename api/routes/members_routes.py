@@ -144,25 +144,28 @@ def search_member():
     skip = (page - 1) * limit
 
     try:
-        if search_text.isdigit():
-            search_text = int(search_text)
-            search_result = (
-                mongodb.members.find(
-                    {"memberno": search_text}
-                )
-                .sort("memberno", 1)
-                .skip(skip)
-                .limit(limit)
-            )
+        # Build filter query first
+        if search_text and search_text.isdigit():
+            search_filter = {"memberno": int(search_text)}
         else:
-            search_result = (
-                mongodb.members.find(
-                    {"fullname": {"$regex": f".*{search_text}.*", "$options": "i"}}
-                )
-                .sort("memberno", 1)
-                .skip(skip)
-                .limit(limit)
-            )
+            search_filter = {
+                "fullname": {
+                    "$regex": f".*{search_text}.*",
+                    "$options": "i"
+                }
+            }
+
+        # 🔹 Get total count BEFORE pagination
+        total_records = mongodb.members.count_documents(search_filter)
+
+        # 🔹 Apply pagination
+        search_result = (
+            mongodb.members.find(search_filter)
+            .sort("memberno", 1)
+            .skip(skip)
+            .limit(limit)
+        )
+
         search_found = []
         for result in search_result:
             result['_id'] = str(result['_id'])
@@ -175,8 +178,8 @@ def search_member():
                     "pagination": {
                         "page": page,
                         "limit": limit,
-                        "totalRecords": len(search_found),
-                        "totalPages": math.ceil(len(search_found) / limit)
+                        "totalRecords": total_records,
+                        "totalPages": math.ceil(total_records / limit)
                     }}
         else:
             return {"status": "Failed", "msg": "No members found", "members": []}
