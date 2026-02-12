@@ -85,8 +85,9 @@ function MembersPage() {
 
 
   async function handleSearch() {
+    setCurrentPage(1)
     setLoading(true)
-    await searchMember(search, currentPage, membersperPage)
+    await searchMember(search, 1, membersperPage)
     setLoading(false)
   }
 
@@ -95,6 +96,7 @@ function MembersPage() {
       setCurrentPage(1)
       setSearchedMember([])
       setNotFound(false)
+      getMembers(1, membersperPage);
     }
   }, [search])
 
