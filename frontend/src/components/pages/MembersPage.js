@@ -92,6 +92,7 @@ function MembersPage() {
 
   useEffect(() => {
     if (search.trim() === "") {
+      setCurrentPage(1)
       setSearchedMember([])
       setNotFound(false)
     }
