@@ -193,7 +193,10 @@ def members_export():
     try:
         req_columns = request.json
         csv_cols = ['memberno', 'fullname']
-        results = mongodb.members.find()
+        results = (mongodb.members
+                   .find({"livingStatus": {"$ne": "मृत"}})
+                   .sort("memberno", 1)
+                   )
 
         members_data = []
         for result in results:
