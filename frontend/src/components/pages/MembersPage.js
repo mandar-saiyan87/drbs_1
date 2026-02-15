@@ -10,7 +10,7 @@ function MembersPage() {
   const context = useContext(AppContext);
 
   const { members, getMembers, deleteMember, searchMember, searchedMember, setSearchedMember, notFound,
-    setNotFound, pagination, searchpagination } = context;
+    setNotFound, pagination, searchpagination, memberListingPage, setmemberListingPage } = context;
 
   const navigate = useNavigate();
 
@@ -19,16 +19,16 @@ function MembersPage() {
   const [isModal, setModal] = useState(false)
 
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [searchPage, setSearchPage] = useState(1);
   const [membersperPage, setMembersPage] = useState(20)
 
-  console.log(searchpagination)
+  const currentPage = search ? searchPage : memberListingPage
 
 
   useEffect(() => {
     async function fetchMembers() {
       setLoading(true)
-      await getMembers(currentPage, membersperPage);
+      await getMembers(memberListingPage, membersperPage);
       setLoading(false)
     }
     fetchMembers()
@@ -36,6 +36,7 @@ function MembersPage() {
   }, []);
 
   async function handlePageChange(direction) {
+
     setLoading(true)
 
     if (direction === 'next') {
@@ -48,12 +49,13 @@ function MembersPage() {
       }
 
       const setPage = parseInt(currentPage) + 1
-      setCurrentPage(setPage)
 
       if (search) {
+        setSearchPage(setPage)
         await searchMember(search, setPage, membersperPage)
       }
       else {
+        setmemberListingPage(setPage)
         await getMembers(setPage, membersperPage);
       }
     }
@@ -66,12 +68,13 @@ function MembersPage() {
       }
 
       const setPage = parseInt(currentPage) - 1
-      setCurrentPage(setPage)
 
       if (search) {
+        setSearchPage(setPage)
         await searchMember(search, setPage, membersperPage)
       }
       else {
+        setmemberListingPage(setPage)
         await getMembers(setPage, membersperPage);
       }
 
@@ -85,18 +88,17 @@ function MembersPage() {
 
 
   async function handleSearch() {
-    setCurrentPage(1)
     setLoading(true)
+    setSearchPage(1)
     await searchMember(search, 1, membersperPage)
     setLoading(false)
   }
 
   useEffect(() => {
     if (search.trim() === "") {
-      setCurrentPage(1)
       setSearchedMember([])
       setNotFound(false)
-      getMembers(1, membersperPage);
+      getMembers(memberListingPage, membersperPage);
     }
   }, [search])
 
@@ -110,7 +112,12 @@ function MembersPage() {
     // Check if it's empty OR within range
     if (rawValue === '' || (numericVal >= 1 && numericVal <= totalPages)) {
       // PASS THE STRING, NOT THE NUMBER
-      setCurrentPage(rawValue);
+      if (search) {
+        setSearchPage(rawValue);
+      }
+      else {
+        setmemberListingPage(rawValue)
+      }
     }
   }
 
@@ -118,11 +125,11 @@ function MembersPage() {
     if (e.key === 'Enter') {
       setLoading(true)
       if (search) {
-        await searchMember(search, currentPage, membersperPage)
+        await searchMember(search, searchPage, membersperPage)
       }
       else {
 
-        await getMembers(currentPage, membersperPage);
+        await getMembers(memberListingPage, membersperPage);
       }
       setLoading(false)
     }
@@ -169,7 +176,7 @@ function MembersPage() {
 
         <div className='flex flex-col items-start justify-center max-w-max mt-10'>
           <div className='flex items-center justify-start gap-4'>
-            <input type="number" value={currentPage} className='w-full max-w-[90px] text-center p-1' onChange={(e) => pageInputHandler(e)} onKeyDown={handleEnterKey} />
+            <input type="number" value={search ? searchPage : memberListingPage} className='w-full max-w-[90px] text-center p-1' onChange={(e) => pageInputHandler(e)} onKeyDown={handleEnterKey} />
             {
               search && searchpagination ? <p className='font-semibold'>of {searchpagination?.totalPages} Pages</p> : <p className='font-semibold'>of {pagination?.totalPages} Pages</p>
             }

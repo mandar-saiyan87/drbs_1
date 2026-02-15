@@ -20,6 +20,8 @@ function DbsState(props) {
 
   const [allmembers, setAllmembers] = useState([])
 
+  const [memberListingPage, setmemberListingPage] = useState(1)
+
 
   // Search Member
 
@@ -246,7 +248,8 @@ function DbsState(props) {
         pagination,
         searchpagination,
         getAllMembers,
-        allmembers
+        allmembers,
+        memberListingPage, setmemberListingPage
       }}>
         {props.children}
       </AppContext.Provider>
