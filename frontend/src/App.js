@@ -15,7 +15,7 @@ import BirthDayList from './components/pages/BirthDayList';
 function App() {
   return (
     <>
-      <div className='bg-[#d9fbfb] max-w-[1536px] m-auto min-h-screen'>
+      <div className='bg-[#f0ffff] max-w-[1536px] m-auto min-h-screen'>
         <DbsState>
           <Navbar />
 

@@ -42,7 +42,7 @@ export default function HallBooking() {
         </div>
         <div className='bg-blue-500 py-3 px-4 my-6 text-white hover:bg-gray-400 cursor-pointer max-w-max rounded-md' onClick={() => setModal(true)}>Export</div>
         <div className='flex flex-row'>
-          <input type="text" value={bookingSearch} className='w-[20%] p-2 rounded-tl-md rounded-bl-md' onChange={(e) => setBookingSearch(e.target.value)} placeholder='Search' />
+          <input type="text" value={bookingSearch} className='w-[20%] p-2 rounded-tl-md rounded-bl-md border-gray-300 border-[1px] focus:outline-gray-400' onChange={(e) => setBookingSearch(e.target.value)} placeholder='Search' />
           <div className='bg-blue-500 px-4 text-white flex items-center justify-center hover:bg-gray-400 cursor-pointer rounded-tr-md rounded-br-md'
             onClick={handleSearch}>SEARCH</div>
         </div>

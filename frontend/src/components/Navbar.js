@@ -7,7 +7,7 @@ export default function Navbar() {
   const [ref, setRef] = useState(false)
   return (
     <>
-      <div className='bg-blue-400 px-4 py-6 w-full m-auto flex shadow-md items-center justify-between relative'>
+      <div className='bg-blue-400 px-7 py-6 w-full m-auto flex shadow-md items-center justify-between relative'>
         <div className='flex gap-10'>
           <div className='text-white text-xl cursor-pointer'>
             <Link to="/">Member Registrations</Link>

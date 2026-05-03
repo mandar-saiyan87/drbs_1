@@ -12,7 +12,9 @@ export default function EditMembers() {
   const [eMember, setEmember] = useState(location.state);
 
   function handleUpdate(e) {
+    eMember.memberno = parseInt(eMember.memberno)
     setEmember({ ...eMember, [e.target.name]: e.target.value })
+    console.log(eMember)
   }
 
   function handleEdits(member, id) {

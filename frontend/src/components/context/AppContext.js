@@ -46,7 +46,7 @@ function DbsState(props) {
     }
     else if (data.status === 'Failed') {
       setNotFound(true)
-    } 
+    }
   }
 
 
@@ -108,7 +108,7 @@ function DbsState(props) {
       body: JSON.stringify({ newMember })
     })
     const data = await req.json()
-    console.log(data)
+    // console.log(data)
   }
 
   // Add new Hall Booking

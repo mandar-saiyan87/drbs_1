@@ -145,7 +145,7 @@ function MembersPage() {
         </div>
         <div className='bg-blue-500 py-3 px-4 my-6 text-white hover:bg-gray-400 cursor-pointer max-w-max rounded-md' onClick={() => setModal(true)}>Export</div>
         <div className='flex flex-row'>
-          <input type="text" value={search} className='w-[20%] p-2 rounded-tl-md rounded-bl-md' onChange={(e) => setSearch(e.target.value)} placeholder='Search' />
+          <input type="text" value={search} className='w-[20%] p-2 rounded-tl-md rounded-bl-md border-gray-300 border-[1px] focus:outline-gray-400' onChange={(e) => setSearch(e.target.value)} placeholder='Search' />
           <div className='bg-blue-500 px-4 text-white flex items-center justify-center hover:bg-gray-400 cursor-pointer rounded-tr-md rounded-br-md' onClick={handleSearch}>SEARCH</div>
         </div>
 
@@ -176,9 +176,9 @@ function MembersPage() {
 
         <div className='flex flex-col items-start justify-center max-w-max mt-10'>
           <div className='flex items-center justify-start gap-4'>
-            <input type="number" value={search ? searchPage : memberListingPage} className='w-full max-w-[90px] text-center p-1' onChange={(e) => pageInputHandler(e)} onKeyDown={handleEnterKey} />
+            <input type="number" value={search ? searchPage : memberListingPage} className='w-full max-w-[75px] text-center p-1 border-[1px] border-gray-300 focus:outline-gray-400' onChange={(e) => pageInputHandler(e)} onKeyDown={handleEnterKey} />
             {
-              search && searchpagination ? <p className='font-semibold'>of {searchpagination?.totalPages} Pages</p> : <p className='font-semibold'>of {pagination?.totalPages} Pages</p>
+              search && searchpagination ? <p className='font-medium'>of {searchpagination?.totalPages} Pages</p> : <p className='font-medium'>of {pagination?.totalPages} Pages</p>
             }
 
           </div>

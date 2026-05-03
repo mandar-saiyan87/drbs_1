@@ -34,6 +34,7 @@ export default function MembersForm() {
   }
 
   function handleSubmit() {
+    memberDetails.memberno = parseInt(memberDetails.memberno)
     // console.log(memberDetails)
     addMember(memberDetails);
     setMemberDetails({
