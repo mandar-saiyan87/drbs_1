@@ -31,10 +31,11 @@ export default function MembersForm() {
 
   function handleChange(e) {
     setMemberDetails({ ...memberDetails, [e.target.name]: e.target.value })
+    memberDetails.memberno = parseInt(memberDetails.memberno)
   }
 
   function handleSubmit() {
-    memberDetails.memberno = parseInt(memberDetails.memberno)
+
     // console.log(memberDetails)
     addMember(memberDetails);
     setMemberDetails({
